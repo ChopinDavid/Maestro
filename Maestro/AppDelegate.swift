@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  Maestro2
+//  Maestro
 //
 //  Created by David G Chopin on 3/7/20.
 //  Copyright © 2020 David G Chopin. All rights reserved.
