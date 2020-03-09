@@ -33,17 +33,15 @@ class Moves {
     
     func horizontalAndVerticalMoves(s: Int) -> UInt64 {
         let binaryS: UInt64 = 1<<s
-        let a = occupied
-        let b = occupied.byteSwapped
-        let possibilitiesHorizontal: UInt64 = (occupied - 2 * binaryS) ^ (occupied.byteSwapped - 2 * binaryS.byteSwapped).byteSwapped
-        let possibilitiesVertical: UInt64 = ((occupied & fileMasks8[s % 8]) - (2 * binaryS)) ^ ((occupied & fileMasks8[s % 8]).byteSwapped - (2 * binaryS.byteSwapped)).byteSwapped
+        let possibilitiesHorizontal: UInt64 = (occupied - 2 * binaryS) ^ UInt64.reversed(UInt64.reversed(occupied) - 2 * UInt64.reversed(binaryS))
+        let possibilitiesVertical: UInt64 = ((occupied & fileMasks8[s % 8]) - (2 * binaryS)) ^ UInt64.reversed(UInt64.reversed(occupied & fileMasks8[s % 8]) - (2 * UInt64.reversed(binaryS)))
         return (possibilitiesHorizontal & rankMasks8[s / 8]) | (possibilitiesVertical & fileMasks8[s % 8])
     }
     
     func diagonalAndAntiDiagonalMoves(s: Int) -> UInt64 {
         let binaryS: UInt64 = 1<<s
-        let possibilitiesDiagonal: UInt64 = ((occupied & diagonalMasks8[(s / 8) + (s % 8)]) - (2 * binaryS)) ^ ((occupied & diagonalMasks8[(s / 8) + (s % 8)]).byteSwapped - (2 * binaryS.byteSwapped)).byteSwapped
-        let possibilitiesAntiDiagonal = ((occupied & antiDiagonalMasks8[(s / 8) + 7 - (s % 8)]) - (2 * binaryS)) ^ ((occupied & antiDiagonalMasks8[(s / 8) + (s % 8)]).byteSwapped - (2 * binaryS.byteSwapped)).byteSwapped
+        let possibilitiesDiagonal: UInt64 = ((occupied & diagonalMasks8[(s / 8) + (s % 8)]) - (2 * binaryS)) ^ UInt64.reversed(UInt64.reversed(occupied & diagonalMasks8[(s / 8) + (s % 8)]) - (2 * UInt64.reversed(binaryS)))
+        let possibilitiesAntiDiagonal = ((occupied & antiDiagonalMasks8[(s / 8) + 7 - (s % 8)]) - (2 * binaryS)) ^ UInt64.reversed(UInt64.reversed(occupied & antiDiagonalMasks8[(s / 8) + (s % 8)]) - (2 * UInt64.reversed(binaryS)))
         return (possibilitiesDiagonal & diagonalMasks8[(s / 8) + (s % 8)]) | (possibilitiesAntiDiagonal & antiDiagonalMasks8[(s / 8) + 7 - (s % 8)])
     }
     
