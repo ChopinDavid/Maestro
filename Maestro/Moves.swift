@@ -37,16 +37,16 @@ class Moves {
         let pseudoPossibleMoves: UInt64 = rankMask ^ fileMask
         var unblockedRanks: UInt64 = 0
         var unblockedFiles: UInt64 = 0
-        var direction: ScanDirection! = ScanDirection.up
+        var direction: Direction! = Direction.north
         
         var testingSquare: Int = s - 8
-        while direction == .up {
+        while direction == .north {
             if testingSquare < 0 || testingSquare%8 != s%8 {
-                direction = .right
+                direction = .east
             } else {
                 if 1<<testingSquare&occupied != 0 {
                     unblockedRanks += rankMasks8[testingSquare/8]
-                    direction = .right
+                    direction = .east
                 } else {
                     unblockedRanks += rankMasks8[testingSquare/8]
                     testingSquare -= 8
@@ -55,13 +55,13 @@ class Moves {
         }
         
         testingSquare = s + 1
-        while direction == .right {
+        while direction == .east {
             if testingSquare > 63 || testingSquare/8 != s/8 {
-                direction = .down
+                direction = .south
             } else {
                 if 1<<testingSquare&occupied != 0 {
                     unblockedFiles += fileMasks8[testingSquare%8]
-                    direction = .down
+                    direction = .south
                 } else {
                     unblockedFiles += fileMasks8[testingSquare%8]
                     testingSquare += 1
@@ -70,13 +70,13 @@ class Moves {
         }
         
         testingSquare = s + 8
-        while direction == .down {
+        while direction == .south {
             if testingSquare > 63 || testingSquare%8 != s%8 {
-                direction = .left
+                direction = .west
             } else {
                 if 1<<testingSquare&occupied != 0 {
                     unblockedRanks += rankMasks8[testingSquare/8]
-                    direction = .left
+                    direction = .west
                 } else {
                     unblockedRanks += rankMasks8[testingSquare/8]
                     testingSquare += 8
@@ -85,13 +85,13 @@ class Moves {
         }
         
         testingSquare = s - 1
-        while direction == .left {
+        while direction == .west {
             if testingSquare < 0 || testingSquare/8 != s/8 {
-                direction = .up
+                direction = .north
             } else {
                 if 1<<testingSquare&occupied != 0 {
                     unblockedFiles += fileMasks8[testingSquare%8]
-                    direction = .up
+                    direction = .north
                 } else {
                     unblockedFiles += fileMasks8[testingSquare%8]
                     testingSquare -= 1
@@ -106,97 +106,77 @@ class Moves {
     }
     
     func diagonalAndAntiDiagonalMoves(s: Int) -> UInt64 {
-        let diagonalMask: UInt64!
-        let antiDiagonalMask: UInt64!
-        if (s%8 + s/8) >= 7 {
-            if s == 63 {
-                diagonalMask = diagonalMasks8[14]
-            } else {
-                diagonalMask = diagonalMasks8[7 + s%7]
-            }
-        } else {
-            diagonalMask = diagonalMasks8[s%7]
-        }
-        antiDiagonalMask = antiDiagonalMasks8[(7 - s%8) + s/8]
-        /*
-        let pseudoPossibleMoves: UInt64 = rankMask ^ fileMask
-        var unblockedRanks: UInt64 = 0
-        var unblockedFiles: UInt64 = 0
-        var direction: ScanDirection! = ScanDirection.up
+        let diagonalMask: UInt64! = diagonalMasks8[s%8 + s/8]
+        let antiDiagonalMask: UInt64! = antiDiagonalMasks8[(7 - s%8) + s/8]
+        let pseudoPossibleMoves: UInt64 = diagonalMask ^ antiDiagonalMask
+        var unblockedDiagonals: UInt64 = 0
+        var unblockedAntiDiagonals: UInt64 = 0
+        var direction: Direction! = Direction.northeast
         
-        var testingSquare: Int = s - 8
-        while direction == .up {
-            if testingSquare < 0 || unblockedRanks >= 18446744073709551615 {
-                direction = .right
+        var testingSquare: Int = s - 7
+        while direction == .northeast {
+            if testingSquare < 0 || testingSquare > 63 || testingSquare/8 == s/8 {
+                direction = .southeast
             } else {
-                if testingSquare%8 != s%8 {
-                    direction = .right
-                } else if 1<<testingSquare&occupied != 0 {
-                    unblockedRanks += rankMasks8[testingSquare/8]
-                    direction = .right
+                if 1<<testingSquare&occupied != 0 {
+                    unblockedAntiDiagonals += antiDiagonalMasks8[(7 - testingSquare%8) + testingSquare/8]
+                    direction = .southeast
                 } else {
-                    unblockedRanks += rankMasks8[testingSquare/8]
-                    testingSquare -= 8
+                    unblockedAntiDiagonals += antiDiagonalMasks8[(7 - testingSquare%8) + testingSquare/8]
+                    testingSquare -= 7
                 }
             }
         }
         
-        testingSquare = s + 1
-        while direction == .right {
-            if testingSquare > 63 || unblockedFiles >= 18446744073709551615 {
-                direction = .down
+        testingSquare = s + 9
+        while direction == .southeast {
+            if testingSquare > 63 || testingSquare/8 == s/8 {
+                direction = .southwest
             } else {
-                if testingSquare/8 != s/8 {
-                    direction = .down
-                } else if 1<<testingSquare&occupied != 0 {
-                    unblockedFiles += fileMasks8[testingSquare%8]
-                    direction = .down
+                if 1<<testingSquare&occupied != 0 {
+                    unblockedDiagonals += diagonalMasks8[testingSquare%8 + testingSquare/8]
+                    direction = .southwest
                 } else {
-                    unblockedFiles += fileMasks8[testingSquare%8]
-                    testingSquare += 1
+                    unblockedDiagonals += diagonalMasks8[testingSquare%8 + testingSquare/8]
+                    testingSquare += 9
                 }
             }
         }
         
-        testingSquare = s + 8
-        while direction == .down {
-            if testingSquare > 63 || unblockedRanks >= 18446744073709551615 {
-                direction = .left
+        testingSquare = s + 7
+        while direction == .southwest {
+            if testingSquare < 0 || testingSquare > 63 || testingSquare%8 == s%8 {
+                direction = .northwest
             } else {
-                if testingSquare%8 != s%8 {
-                    direction = .left
-                } else if 1<<testingSquare&occupied != 0 {
-                    unblockedRanks += rankMasks8[testingSquare/8]
-                    direction = .left
+                if 1<<testingSquare&occupied != 0 {
+                    unblockedAntiDiagonals += antiDiagonalMasks8[(7 - testingSquare%8) + testingSquare/8]
+                    direction = .northwest
                 } else {
-                    unblockedRanks += rankMasks8[testingSquare/8]
-                    testingSquare += 8
+                    unblockedAntiDiagonals += antiDiagonalMasks8[(7 - testingSquare%8) + testingSquare/8]
+                    testingSquare += 7
                 }
             }
         }
         
-        testingSquare = s - 1
-        while direction == .left {
-            if testingSquare < 0 {
-                direction = .up
+        testingSquare = s - 9
+        while direction == .northwest {
+            if testingSquare < 0 || testingSquare/8 == s/8 {
+                direction = .northeast
             } else {
-                if testingSquare/8 != s/8 {
-                    direction = .up
-                } else if 1<<testingSquare&occupied != 0 {
-                    unblockedFiles += fileMasks8[testingSquare%8]
-                    direction = .up
+                if 1<<testingSquare&occupied != 0 {
+                    unblockedDiagonals += diagonalMasks8[testingSquare%8 + testingSquare/8]
+                    direction = .northeast
                 } else {
-                    unblockedFiles += fileMasks8[testingSquare%8]
-                    testingSquare -= 1
+                    unblockedDiagonals += diagonalMasks8[testingSquare%8 + testingSquare/8]
+                    testingSquare -= 9
                 }
             }
         }
         
-        let mask = unblockedRanks | unblockedFiles
+        let mask = unblockedDiagonals | unblockedAntiDiagonals
         let possibleMoves = pseudoPossibleMoves&mask
         
-        return possibleMoves*/
-        return diagonalMask|antiDiagonalMask
+        return possibleMoves
     }
     
     func possibleMovesW(history: String, WP: UInt64, WN: UInt64, WB: UInt64, WR: UInt64, WQ: UInt64, WK: UInt64, BP: UInt64, BN: UInt64, BB: UInt64, BR: UInt64, BQ: UInt64, BK: UInt64) -> String {
@@ -209,11 +189,10 @@ class Moves {
         
         
         for i in 0..<64 {
-            print(horizontalAndVerticalMoves(s: i))
+            print(diagonalAndAntiDiagonalMoves(s: i))
         }
         
-        //diagonalAndAntiDiagonalMoves(s: 1)
-        
+        //print(diagonalAndAntiDiagonalMoves(s: 27))
         
         return list
     }
@@ -339,6 +318,6 @@ class Moves {
     }
 }
 
-enum ScanDirection {
-    case up, down, left, right
+enum Direction {
+    case north, northeast, east, southeast, south, southwest, west, northwest
 }
