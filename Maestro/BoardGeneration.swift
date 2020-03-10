@@ -27,8 +27,8 @@ class BoardGeneration {
             ["r","n","b","q","k","b","n","r"],
             ["p","p","p","p","p","p","p","p"],
             [" "," "," "," "," "," "," "," "],
-            [" "," "," "," "," "," "," "," "],
-            [" "," "," "," "," "," "," "," "],
+            [" "," "," "," "," ","p"," "," "],
+            [" "," "," "," ","B"," "," "," "],
             [" "," "," "," "," "," "," "," "],
             ["P","P","P","P","P","P","P","P"],
             ["R","N","B","Q","K","B","N","R"]
@@ -173,7 +173,7 @@ class BoardGeneration {
         
         drawArray(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK)
         
-        Moves().possibleMovesW(history: "1636", WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK)
+        Moves().possibleMovesW(history: "1636", WP: WP, WN: WN, WB: &WB, WR: &WR, WQ: &WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK)
         
     }
     

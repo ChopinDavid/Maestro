@@ -179,25 +179,18 @@ class Moves {
         return possibleMoves
     }
     
-    func possibleMovesW(history: String, WP: UInt64, WN: UInt64, WB: UInt64, WR: UInt64, WQ: UInt64, WK: UInt64, BP: UInt64, BN: UInt64, BB: UInt64, BR: UInt64, BQ: UInt64, BK: UInt64) -> String {
+    func possibleMovesW(history: String, WP: UInt64, WN: UInt64, WB: inout UInt64, WR: inout UInt64, WQ: inout UInt64, WK: UInt64, BP: UInt64, BN: UInt64, BB: UInt64, BR: UInt64, BQ: UInt64, BK: UInt64) -> String {
         notWhitePieces = ~(WP|WN|WB|WR|WQ|WK|BK)
         blackPieces = BP|BN|BB|BR|BQ
         occupied = WP|WN|WB|WR|WQ|WK|BP|BN|BB|BR|BQ|BK
         empty = ~occupied
         
-        let list: String = possiblePW(history: history, WP: WP, BP: BP)
-        
-        
-        for i in 0..<64 {
-            print(diagonalAndAntiDiagonalMoves(s: i))
-        }
-        
-        //print(diagonalAndAntiDiagonalMoves(s: 27))
+        let list: String = "\(possibleWP(history: history, WP: WP, BP: BP))\(possibleWB(occupied: occupied, WB: &WB))\(possibleWR(occupied: occupied, WR: &WR))\(possibleWQ(occupied: occupied, WQ: &WQ))"
         
         return list
     }
     
-    func possiblePW(history: String, WP: UInt64, BP: UInt64) -> String {
+    func possibleWP(history: String, WP: UInt64, BP: UInt64) -> String {
         var list: String = ""
         
         //first, let's look at right-captures
@@ -289,6 +282,90 @@ class Moves {
             }
         }
         
+        return list
+    }
+    
+    func possibleWB(occupied: UInt64, WB: inout UInt64) -> String {
+        var list: String = ""
+        var i: UInt64 = WB & ~(WB - 1)
+        var possibility: UInt64!
+        while i != 0 {
+            let iLocation: Int = i.trailingZeroBitCount
+            possibility = diagonalAndAntiDiagonalMoves(s: iLocation)&notWhitePieces
+            if possibility != 0 {
+                var j: UInt64 = possibility & ~(possibility - 1)
+                while j != 0 {
+                    let index: Int = j.trailingZeroBitCount
+                    list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
+                    possibility &= ~j
+                    if possibility != 0 {
+                        j = possibility & ~(possibility - 1)
+                    } else {
+                        j = 0
+                    }
+                }
+                WB &= ~i
+                i = WB & ~(WB - 1)
+            } else {
+                i = 0
+            }
+        }
+        return list
+    }
+    
+    func possibleWR(occupied: UInt64, WR: inout UInt64) -> String {
+        var list: String = ""
+        var i: UInt64 = WR & ~(WR - 1)
+        var possibility: UInt64!
+        while i != 0 {
+            let iLocation: Int = i.trailingZeroBitCount
+            possibility = horizontalAndVerticalMoves(s: iLocation)&notWhitePieces
+            if possibility != 0 {
+                var j: UInt64 = possibility & ~(possibility - 1)
+                while j != 0 {
+                    let index: Int = j.trailingZeroBitCount
+                    list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
+                    possibility &= ~j
+                    if possibility != 0 {
+                        j = possibility & ~(possibility - 1)
+                    } else {
+                        j = 0
+                    }
+                }
+                WR &= ~i
+                i = WR & ~(WR - 1)
+            } else {
+                i = 0
+            }
+        }
+        return list
+    }
+    
+    func possibleWQ(occupied: UInt64, WQ: inout UInt64) -> String {
+        var list: String = ""
+        var i: UInt64 = WQ & ~(WQ - 1)
+        var possibility: UInt64!
+        while i != 0 {
+            let iLocation: Int = i.trailingZeroBitCount
+            possibility = (horizontalAndVerticalMoves(s: iLocation)|diagonalAndAntiDiagonalMoves(s: iLocation))&notWhitePieces
+            if possibility != 0 {
+                var j: UInt64 = possibility & ~(possibility - 1)
+                while j != 0 {
+                    let index: Int = j.trailingZeroBitCount
+                    list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
+                    possibility &= ~j
+                    if possibility != 0 {
+                        j = possibility & ~(possibility - 1)
+                    } else {
+                        j = 0
+                    }
+                }
+                WQ &= ~i
+                i = WQ & ~(WQ - 1)
+            } else {
+                i = 0
+            }
+        }
         return list
     }
     
