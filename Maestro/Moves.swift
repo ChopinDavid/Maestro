@@ -21,11 +21,14 @@ class Moves {
     let extendedCenter: UInt64 = 66229406269440
     let kingSide: UInt64 = 17361641481138401520
     let queenSide: UInt64 = 1085102592571150095
-    var notWhitePieces: UInt64!
-    var blackPieces: UInt64!
+    let kingSpan: UInt64 = 460039
+    let knightSpan: UInt64 = 43234889994
+    var notMyPieces: UInt64!
+    var myPieces: UInt64!
     var empty: UInt64!
     var occupied: UInt64!
     
+    let castleRooks: [UInt64] = [ 63, 56, 7, 0 ]
     let rankMasks8: [UInt64] = [ 255, 65280, 16711680, 4278190080, 1095216660480, 280375465082880, 71776119061217280, 18374686479671623680 ]
     let fileMasks8: [UInt64] = [ 72340172838076673, 144680345676153346, 289360691352306692, 578721382704613384, 1157442765409226768, 2314885530818453536, 4629771061636907072, 9259542123273814144 ]
     let diagonalMasks8: [UInt64] = [ 1, 258, 66052, 16909320, 4328785936, 1108169199648, 283691315109952, 72624976668147840, 145249953336295424, 290499906672525312, 580999813328273408, 1161999622361579520, 2323998145211531264, 4647714815446351872, 9223372036854775808 ]
@@ -179,22 +182,33 @@ class Moves {
         return possibleMoves
     }
     
-    func possibleMovesW(history: String, WP: UInt64, WN: UInt64, WB: inout UInt64, WR: inout UInt64, WQ: inout UInt64, WK: UInt64, BP: UInt64, BN: UInt64, BB: UInt64, BR: UInt64, BQ: UInt64, BK: UInt64) -> String {
-        notWhitePieces = ~(WP|WN|WB|WR|WQ|WK|BK)
-        blackPieces = BP|BN|BB|BR|BQ
+    func possibleMovesW(WP: UInt64, WN: UInt64, WB: UInt64, WR: UInt64, WQ: UInt64, WK: UInt64, BP: UInt64, BN: UInt64, BB: UInt64, BR: UInt64, BQ: UInt64, BK: UInt64, EP: UInt64, CWK: Bool, CWQ: Bool, CBK: Bool, CBQ: Bool) -> String {
+        notMyPieces = ~(WP|WN|WB|WR|WQ|WK|BK)
+        myPieces = WP|WN|WB|WR|WQ
         occupied = WP|WN|WB|WR|WQ|WK|BP|BN|BB|BR|BQ|BK
         empty = ~occupied
         
-        let list: String = "\(possibleWP(history: history, WP: WP, BP: BP))\(possibleWB(occupied: occupied, WB: &WB))\(possibleWR(occupied: occupied, WR: &WR))\(possibleWQ(occupied: occupied, WQ: &WQ))"
-        
+        let list: String = "\(possibleWP(WP: WP, BP: BP, EP: EP))\(possibleN(occupied: occupied, N: WN))\(possibleB(occupied: occupied, B: WB))\(possibleR(occupied: occupied, R: WR))\(possibleQ(occupied: occupied, Q: WQ))\(possibleK(occupied: occupied, K: WK))\(possibleCW(WR: WR, CWK: CWK, CWQ: CWQ))"
         return list
     }
     
-    func possibleWP(history: String, WP: UInt64, BP: UInt64) -> String {
+    func possibleMovesB(WP: UInt64, WN: UInt64, WB: UInt64, WR: UInt64, WQ: UInt64, WK: UInt64, BP: UInt64, BN: UInt64, BB: UInt64, BR: UInt64, BQ: UInt64, BK: UInt64, EP: UInt64, CWK: Bool, CWQ: Bool, CBK: Bool, CBQ: Bool) -> String {
+        notMyPieces = ~(BP|BN|BB|BR|BQ|BK|WK)
+        myPieces = BP|BN|BB|BR|BQ
+        occupied = WP|WN|WB|WR|WQ|WK|BP|BN|BB|BR|BQ|BK
+        empty = ~occupied
+        
+        let list: String = "\(possibleBP(BP: BP, WP: WP, EP: EP))\(possibleN(occupied: occupied, N: BN))\(possibleB(occupied: occupied, B: BB))\(possibleR(occupied: occupied, R: BR))\(possibleQ(occupied: occupied, Q: BQ))\(possibleK(occupied: occupied, K: BK))\(possibleCB(BR: BR, CBK: CBK, CBQ: CBQ))"
+        return list
+    }
+    
+    func possibleWP(WP: UInt64, BP: UInt64, EP: UInt64) -> String {
         var list: String = ""
+        var possibility: UInt64!
         
         //first, let's look at right-captures
-        var pawnMoves: UInt64 = (WP>>7) & blackPieces & ~rank8 & ~fileA
+        let opponentPieces = occupied & ~myPieces
+        var pawnMoves: UInt64 = (WP>>7) & opponentPieces & ~rank8 & ~fileA
         if pawnMoves != 0 {
             for i in pawnMoves.trailingZeroBitCount..<64 - pawnMoves.leadingZeroBitCount {
                 if ((pawnMoves>>i)&1) == 1 {
@@ -204,7 +218,7 @@ class Moves {
         }
         
         //now, left captures
-        pawnMoves = (WP>>9) & blackPieces & ~rank8 & ~fileH
+        pawnMoves = (WP>>9) & opponentPieces & ~rank8 & ~fileH
         if pawnMoves != 0 {
             for i in pawnMoves.trailingZeroBitCount..<64 - pawnMoves.leadingZeroBitCount {
                 if ((pawnMoves>>i)&1) == 1 {
@@ -234,7 +248,7 @@ class Moves {
         }
         
         //now, promoting, capturing right
-        pawnMoves = (WP>>7) & blackPieces & rank8 & ~fileA
+        pawnMoves = (WP>>7) & occupied & ~myPieces & rank8 & ~fileA
         if pawnMoves != 0 {
             for i in pawnMoves.trailingZeroBitCount..<64 - pawnMoves.leadingZeroBitCount {
                 if ((pawnMoves>>i)&1) == 1 {
@@ -244,7 +258,7 @@ class Moves {
         }
         
         //now, promoting, capturing left
-        pawnMoves = (WP>>9) & blackPieces & rank8 & ~fileH
+        pawnMoves = (WP>>9) & occupied & ~myPieces & rank8 & ~fileH
         if pawnMoves != 0 {
             for i in pawnMoves.trailingZeroBitCount..<64 - pawnMoves.leadingZeroBitCount {
                 if ((pawnMoves>>i)&1) == 1 {
@@ -263,110 +277,493 @@ class Moves {
             }
         }
         
-        if history.count >= 4 {
-            let squaresMoved = abs(Int(String(history[history.index(history.startIndex, offsetBy: history.count - 2)]))! - Int(String(history[history.index(history.startIndex, offsetBy: history.count - 4)]))!)
-            if history[history.index(before: history.endIndex)] == history[history.index(history.startIndex, offsetBy: history.count - 3)] && squaresMoved == 2 {
-                let eFile: Int = Int(String(history[history.index(before: history.endIndex)]))! - 0
-                //en passant right
-                var possibility: UInt64 = (WP << 1) & BP & rank5 & ~fileA & fileMasks8[eFile]
-                if (possibility != 0) {
-                    let index: Int = possibility.trailingZeroBitCount
-                    list += "\(index%8-1)\(index%8) E"
-                }
-                //en passant left
-                possibility = (WP >> 1) & BP & rank5 & ~fileH & fileMasks8[eFile]
-                if (possibility != 0) {
-                    let index: Int = possibility.trailingZeroBitCount
-                    list += "\(index%8+1)\(index%8) E"
-                }
-            }
+        possibility = (WP << 1) & BP & rank5 & ~fileA & EP
+        if possibility != 0 {
+            let index: Int = possibility.trailingZeroBitCount
+            list += "\(index%8-1)\(index%8) E"
+        }
+        
+        possibility = (WP >> 1) & BP & rank5 & ~fileH & EP
+        if possibility != 0 {
+            let index: Int = possibility.trailingZeroBitCount
+            list += "\(index%8+1)\(index%8) E"
         }
         
         return list
     }
     
-    func possibleWB(occupied: UInt64, WB: inout UInt64) -> String {
+    func possibleBP(BP: UInt64, WP: UInt64, EP: UInt64) -> String {
         var list: String = ""
-        var i: UInt64 = WB & ~(WB - 1)
         var possibility: UInt64!
-        while i != 0 {
-            let iLocation: Int = i.trailingZeroBitCount
-            possibility = diagonalAndAntiDiagonalMoves(s: iLocation)&notWhitePieces
-            if possibility != 0 {
-                var j: UInt64 = possibility & ~(possibility - 1)
-                while j != 0 {
-                    let index: Int = j.trailingZeroBitCount
-                    list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
-                    possibility &= ~j
-                    if possibility != 0 {
-                        j = possibility & ~(possibility - 1)
-                    } else {
-                        j = 0
-                    }
+        
+        //first, let's look at right-captures
+        let opponentPieces = occupied & ~myPieces
+        var pawnMoves: UInt64 = (BP<<7) & opponentPieces & ~rank1 & ~fileH
+        if pawnMoves != 0 {
+            for i in pawnMoves.trailingZeroBitCount..<64 - pawnMoves.leadingZeroBitCount {
+                if ((pawnMoves>>i)&1) == 1 {
+                    list += "\(i/8-1)\(i%8+1)\(i/8)\(i%8)"
                 }
-                WB &= ~i
-                i = WB & ~(WB - 1)
-            } else {
-                i = 0
+            }
+        }
+        
+        //now, left captures
+        pawnMoves = (BP<<9) & opponentPieces & ~rank1 & ~fileA
+        if pawnMoves != 0 {
+            for i in pawnMoves.trailingZeroBitCount..<64 - pawnMoves.leadingZeroBitCount {
+                if ((pawnMoves>>i)&1) == 1 {
+                    list += "\(i/8-1)\(i%8-1)\(i/8)\(i%8)"
+                }
+            }
+        }
+        
+        //now, moving 1 forward
+        pawnMoves = (BP<<8) & empty & ~rank1
+        
+        if pawnMoves != 0 {
+            for i in pawnMoves.trailingZeroBitCount..<64 - pawnMoves.leadingZeroBitCount {
+                if ((pawnMoves>>i)&1) == 1 {
+                    list += "\(i/8-1)\(i%8)\(i/8)\(i%8)"
+                }
+            }
+        }
+        
+        //now, moving 2 forward
+        pawnMoves = (BP<<16) & empty & (empty<<8) & rank5
+        if pawnMoves != 0 {
+            for i in pawnMoves.trailingZeroBitCount..<64 - pawnMoves.leadingZeroBitCount {
+                if ((pawnMoves>>i)&1) == 1 {
+                    list += "\(i/8-2)\(i%8)\(i/8)\(i%8)"
+                }
+            }
+        }
+        
+        //now, promoting, capturing right
+        pawnMoves = (BP<<7) & occupied & ~myPieces & rank1 & ~fileH
+        if pawnMoves != 0 {
+            for i in pawnMoves.trailingZeroBitCount..<64 - pawnMoves.leadingZeroBitCount {
+                if ((pawnMoves>>i)&1) == 1 {
+                    list += "\(i%8+1)\(i%8)QP\(i%8+1)\(i%8)RP\(i%8+1)\(i%8)BP\(i%8+1)\(i%8)NP"
+                }
+            }
+        }
+        
+        //now, promoting, capturing left
+        pawnMoves = (BP<<9) & occupied & ~myPieces & rank1 & ~fileA
+        if pawnMoves != 0 {
+            for i in pawnMoves.trailingZeroBitCount..<64 - pawnMoves.leadingZeroBitCount {
+                if ((pawnMoves>>i)&1) == 1 {
+                    list += "\(i%8-1)\(i%8)QP\(i%8-1)\(i%8)RP\(i%8-1)\(i%8)BP\(i%8-1)\(i%8)NP"
+                }
+            }
+        }
+        
+        //now, promoting, moving 1 forward
+        pawnMoves = (BP<<8) & empty & rank1
+        if pawnMoves != 0 {
+            for i in pawnMoves.trailingZeroBitCount..<64 - pawnMoves.leadingZeroBitCount {
+                if ((pawnMoves>>i)&1) == 1 {
+                    list += "\(i%8)\(i%8)QP\(i%8)\(i%8)RP\(i%8)\(i%8)BP\(i%8)\(i%8)NP"
+                }
+            }
+        }
+        
+        possibility = (BP >> 1) & WP & rank4 & ~fileH & EP
+        if possibility != 0 {
+            let index: Int = possibility.trailingZeroBitCount
+            list += "\(index%8+1)\(index%8) E"
+        }
+        
+        possibility = (BP << 1) & WP & rank4 & ~fileA & EP
+        if possibility != 0 {
+            let index: Int = possibility.trailingZeroBitCount
+            list += "\(index%8-1)\(index%8) E"
+        }
+        return list
+    }
+    
+    func possibleN(occupied: UInt64, N: UInt64) -> String {
+        var N = N
+        var list: String = ""
+        if N != 0 {
+            var i: UInt64 = N & ~(N-1)
+            var possibility: UInt64!
+            while i != 0 {
+                let iLocation: Int = i.trailingZeroBitCount
+                if iLocation > 18 {
+                    possibility = knightSpan<<(iLocation-18)
+                } else {
+                    possibility = knightSpan>>(18-iLocation)
+                }
+                
+                if iLocation%8 < 4 {
+                    possibility &= ~filesGH&notMyPieces
+                } else {
+                    possibility &= ~filesAB&notMyPieces
+                }
+                if possibility != 0 {
+                    var j: UInt64 = possibility & ~(possibility - 1)
+                    while j != 0 {
+                        let index: Int = j.trailingZeroBitCount
+                        list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
+                        possibility &= ~j
+                        
+                        if possibility != 0 {
+                            j = possibility & ~(possibility-1)
+                        } else {
+                            j = 0
+                        }
+                    }
+                    N &= ~i
+                    if N != 0 {
+                        i = N & ~(N - 1)
+                    } else {
+                        i = 0
+                    }
+                } else {
+                    i = 0
+                }
             }
         }
         return list
     }
     
-    func possibleWR(occupied: UInt64, WR: inout UInt64) -> String {
+    func possibleB(occupied: UInt64, B: UInt64) -> String {
+        var B = B
         var list: String = ""
-        var i: UInt64 = WR & ~(WR - 1)
-        var possibility: UInt64!
-        while i != 0 {
-            let iLocation: Int = i.trailingZeroBitCount
-            possibility = horizontalAndVerticalMoves(s: iLocation)&notWhitePieces
-            if possibility != 0 {
-                var j: UInt64 = possibility & ~(possibility - 1)
-                while j != 0 {
-                    let index: Int = j.trailingZeroBitCount
-                    list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
-                    possibility &= ~j
-                    if possibility != 0 {
-                        j = possibility & ~(possibility - 1)
-                    } else {
-                        j = 0
+        if B != 0 {
+            var i: UInt64 = B & ~(B - 1)
+            var possibility: UInt64!
+            while i != 0 {
+                let iLocation: Int = i.trailingZeroBitCount
+                possibility = diagonalAndAntiDiagonalMoves(s: iLocation)&notMyPieces
+                if possibility != 0 {
+                    var j: UInt64 = possibility & ~(possibility - 1)
+                    while j != 0 {
+                        let index: Int = j.trailingZeroBitCount
+                        list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
+                        possibility &= ~j
+                        if possibility != 0 {
+                            j = possibility & ~(possibility - 1)
+                        } else {
+                            j = 0
+                        }
                     }
+                    B &= ~i
+                    if B != 0 {
+                        i = B & ~(B - 1)
+                    } else {
+                        i = 0
+                    }
+                } else {
+                    i = 0
                 }
-                WR &= ~i
-                i = WR & ~(WR - 1)
-            } else {
-                i = 0
             }
         }
         return list
     }
     
-    func possibleWQ(occupied: UInt64, WQ: inout UInt64) -> String {
+    func possibleR(occupied: UInt64, R: UInt64) -> String {
+        var R = R
         var list: String = ""
-        var i: UInt64 = WQ & ~(WQ - 1)
-        var possibility: UInt64!
-        while i != 0 {
-            let iLocation: Int = i.trailingZeroBitCount
-            possibility = (horizontalAndVerticalMoves(s: iLocation)|diagonalAndAntiDiagonalMoves(s: iLocation))&notWhitePieces
-            if possibility != 0 {
-                var j: UInt64 = possibility & ~(possibility - 1)
-                while j != 0 {
-                    let index: Int = j.trailingZeroBitCount
-                    list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
-                    possibility &= ~j
-                    if possibility != 0 {
-                        j = possibility & ~(possibility - 1)
-                    } else {
-                        j = 0
+        if R != 0 {
+            var i: UInt64 = R & ~(R - 1)
+            var possibility: UInt64!
+            while i != 0 {
+                let iLocation: Int = i.trailingZeroBitCount
+                possibility = horizontalAndVerticalMoves(s: iLocation)&notMyPieces
+                if possibility != 0 {
+                    var j: UInt64 = possibility & ~(possibility - 1)
+                    while j != 0 {
+                        let index: Int = j.trailingZeroBitCount
+                        list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
+                        possibility &= ~j
+                        if possibility != 0 {
+                            j = possibility & ~(possibility - 1)
+                        } else {
+                            j = 0
+                        }
                     }
+                    R &= ~i
+                    if R != 0 {
+                        i = R & ~(R - 1)
+                    } else {
+                        i = 0
+                    }
+                } else {
+                    i = 0
                 }
-                WQ &= ~i
-                i = WQ & ~(WQ - 1)
-            } else {
-                i = 0
             }
         }
         return list
+    }
+    
+    func possibleQ(occupied: UInt64, Q: UInt64) -> String {
+        var Q = Q
+        var list: String = ""
+        if Q != 0 {
+            var i: UInt64 = Q & ~(Q - 1)
+            var possibility: UInt64!
+            while i != 0 {
+                let iLocation: Int = i.trailingZeroBitCount
+                possibility = (horizontalAndVerticalMoves(s: iLocation)|diagonalAndAntiDiagonalMoves(s: iLocation))&notMyPieces
+                if possibility != 0 {
+                    var j: UInt64 = possibility & ~(possibility - 1)
+                    while j != 0 {
+                        let index: Int = j.trailingZeroBitCount
+                        list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
+                        possibility &= ~j
+                        if possibility != 0 {
+                            j = possibility & ~(possibility - 1)
+                        } else {
+                            j = 0
+                        }
+                    }
+                    Q &= ~i
+                    if Q != 0 {
+                        i = Q & ~(Q - 1)
+                    } else {
+                        i = 0
+                    }
+                } else {
+                    i = 0
+                }
+            }
+        }
+        return list
+    }
+    
+    func possibleK(occupied: UInt64, K: UInt64) -> String {
+        var list: String = ""
+        var possibility: UInt64!
+        let iLocation: Int = K.trailingZeroBitCount
+        if iLocation > 9 {
+            possibility = kingSpan<<(iLocation - 9)
+        } else {
+            possibility = kingSpan>>(9 - iLocation)
+        }
+        
+        if iLocation%8 < 4 {
+            possibility &= ~filesGH&notMyPieces
+        } else {
+            possibility &= ~filesAB&notMyPieces
+        }
+        
+        if possibility != 0 {
+            var j: UInt64 = possibility & ~(possibility - 1)
+            
+            while (j != 0) {
+                let index: Int = j.trailingZeroBitCount
+                list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
+                possibility &= ~j
+                if possibility != 0 {
+                    j = possibility & ~(possibility - 1)
+                } else {
+                    j = 0
+                }
+            }
+        }
+        return list
+    }
+    
+    func possibleCW(WR: UInt64, CWK: Bool, CWQ: Bool) -> String {
+        var list: String = ""
+        if CWK && (((1<<castleRooks[0]) & WR) != 0) {
+            list += "7476"
+        }
+        
+        if CWQ && (((1<<castleRooks[1]) & WR) != 0) {
+            list += "7472";
+        }
+        return list
+    }
+    
+    func possibleCB(BR: UInt64, CBK: Bool, CBQ: Bool) -> String {
+        var list: String = ""
+        if CBK && (((1<<castleRooks[2]) & BR) != 0) {
+            list += "0406";
+        }
+        if CBQ && (((1<<castleRooks[3])&BR) != 0) {
+            list += "0402";
+        }
+        return list
+    }
+    
+    func unsafeForWhite(WP: UInt64, WN: UInt64, WB: UInt64, WR: UInt64, WQ: UInt64, WK: UInt64, BP: UInt64, BN: UInt64, BB: UInt64, BR: UInt64, BQ: UInt64, BK: UInt64) -> UInt64 {
+        var BN: UInt64 = BN
+        var unsafe: UInt64!
+        occupied = WP|WN|WB|WR|WQ|WK|BP|BN|BB|BR|BQ|BK
+        //pawn
+        unsafe = (BP<<7) & ~fileH//pawn capture right
+        unsafe |= (BP<<9) & ~fileA//pawn capture left
+        
+        var possibility: UInt64!
+        //knight
+        var i: UInt64!
+        if BN != 0 {
+            i = BN & ~(BN-1)
+            while i != 0 {
+                let iLocation: Int = i.trailingZeroBitCount
+                if iLocation > 18 {
+                    possibility = knightSpan<<(iLocation - 18)
+                } else {
+                    possibility = knightSpan>>(18 - iLocation)
+                }
+                
+                if iLocation%8 < 4 {
+                    possibility &= ~filesGH
+                } else {
+                    possibility &= ~filesAB
+                }
+                
+                unsafe |= possibility
+                BN &= ~i
+                if BN != 0 {
+                    i = BN & ~(BN-1)
+                } else {
+                    i = 0
+                }
+            }
+        }
+        
+        //bishop/queen
+        var QB: UInt64 = BQ|BB
+        if QB != 0 {
+            i = QB & ~(QB - 1)
+            while i != 0 {
+                let iLocation: Int = i.trailingZeroBitCount
+                possibility = diagonalAndAntiDiagonalMoves(s: iLocation)
+                unsafe |= possibility
+                QB &= ~i
+                if QB != 0 {
+                    i = QB & ~(QB-1)
+                } else {
+                    i = 0
+                }
+            }
+        }
+        
+        //rook/queen
+        var QR: UInt64 = BQ|BR
+        if QR != 0 {
+            i = QR & ~(QR - 1)
+            while i != 0 {
+                let iLocation: Int = i.trailingZeroBitCount
+                possibility = horizontalAndVerticalMoves(s: iLocation)
+                unsafe |= possibility
+                QR &= ~i
+                if QR != 0 {
+                    i = QR & ~(QR-1)
+                } else {
+                    i = 0
+                }
+            }
+        }
+        
+        //king
+        let iLocation: Int = BK.trailingZeroBitCount
+        if iLocation > 9 {
+            possibility = kingSpan<<(iLocation - 9)
+        } else {
+            possibility = kingSpan>>(9 - iLocation)
+        }
+        if iLocation%8 < 4 {
+            possibility &= ~filesGH
+        } else {
+            possibility &= ~filesAB
+        }
+        unsafe |= possibility
+        
+        return unsafe
+    }
+    
+    func unsafeForBlack(WP: UInt64, WN: UInt64, WB: UInt64, WR: UInt64, WQ: UInt64, WK: UInt64, BP: UInt64, BN: UInt64, BB: UInt64, BR: UInt64, BQ: UInt64, BK: UInt64) -> UInt64 {
+        var WN: UInt64 = WN
+        var unsafe: UInt64!
+        occupied = WP|WN|WB|WR|WQ|WK|BP|BN|BB|BR|BQ|BK
+        //pawn
+        unsafe = (WP>>7) & ~fileA //pawn capture right
+        unsafe |= (WP>>9) & ~fileH //pawn capture left
+        
+        var possibility: UInt64!
+        //knight
+        var i: UInt64!
+        if WN != 0 {
+            i = WN & ~(WN-1)
+            while i != 0 {
+                let iLocation: Int = i.trailingZeroBitCount
+                if iLocation > 18 {
+                    possibility = knightSpan<<(iLocation - 18)
+                } else {
+                    possibility = knightSpan>>(18 - iLocation)
+                }
+                
+                if iLocation%8 < 4 {
+                    possibility &= ~filesGH
+                } else {
+                    possibility &= ~filesAB
+                }
+                
+                unsafe |= possibility
+                WN &= ~i
+                if WN != 0 {
+                    i = WN & ~(WN-1)
+                } else {
+                    i = 0
+                }
+            }
+        }
+        
+        //bishop/queen
+        var QB: UInt64 = WQ|WB
+        
+        if QB != 0 {
+            i = QB & ~(QB - 1)
+            while i != 0 {
+                let iLocation: Int = i.trailingZeroBitCount
+                possibility = diagonalAndAntiDiagonalMoves(s: iLocation)
+                unsafe |= possibility
+                QB &= ~i
+                if QB != 0 {
+                    i = QB & ~(QB-1)
+                } else {
+                    i = 0
+                }
+            }
+        }
+        
+        //rook/queen
+        var QR: UInt64 = WQ|WR
+        if QR != 0 {
+            i = QR & ~(QR - 1)
+            while i != 0 {
+                let iLocation: Int = i.trailingZeroBitCount
+                possibility = horizontalAndVerticalMoves(s: iLocation)
+                unsafe |= possibility
+                QR &= ~i
+                if QR != 0 {
+                    i = QR & ~(QR-1)
+                } else {
+                    i = 0
+                }
+            }
+        }
+        
+        //king
+        let iLocation: Int = WK.trailingZeroBitCount
+        if iLocation > 9 {
+            possibility = kingSpan<<(iLocation - 9)
+        } else {
+            possibility = kingSpan>>(9 - iLocation)
+        }
+        if iLocation%8 < 4 {
+            possibility &= ~filesGH
+        } else {
+            possibility &= ~filesAB
+        }
+        unsafe |= possibility
+        
+        return unsafe
     }
     
     func drawBitboard(bitBoard: UInt64) {

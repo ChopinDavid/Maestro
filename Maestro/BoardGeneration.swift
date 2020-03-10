@@ -9,47 +9,57 @@
 import Foundation
 
 class BoardGeneration {
+    let EP: UInt64 = 1157442765409226768
+    var CWK: Bool = false
+    var CWQ: Bool = false
+    var CBK: Bool = false
+    var CBQ: Bool = false
+    var universalCastleWhiteK: Bool = false
+    var universalCastleWhiteQ: Bool = false
+    var universalCastleBlackK: Bool = false
+    var universalCastleBlackQ: Bool = false
     func initiateStandardChess() {
-        var WP: UInt64 = 0
-        var WN: UInt64 = 0
-        var WB: UInt64 = 0
-        var WR: UInt64 = 0
-        var WQ: UInt64 = 0
-        var WK: UInt64 = 0
-        var BP: UInt64 = 0
-        var BN: UInt64 = 0
-        var BB: UInt64 = 0
-        var BR: UInt64 = 0
-        var BQ: UInt64 = 0
-        var BK: UInt64 = 0
+        let WP: UInt64 = 0
+        let WN: UInt64 = 0
+        let WB: UInt64 = 0
+        let WR: UInt64 = 0
+        let WQ: UInt64 = 0
+        let WK: UInt64 = 0
+        let BP: UInt64 = 0
+        let BN: UInt64 = 0
+        let BB: UInt64 = 0
+        let BR: UInt64 = 0
+        let BQ: UInt64 = 0
+        let BK: UInt64 = 0
         
         let chessBoard: [[String]] = [
-            ["r","n","b","q","k","b","n","r"],
-            ["p","p","p","p","p","p","p","p"],
             [" "," "," "," "," "," "," "," "],
-            [" "," "," "," "," ","p"," "," "],
-            [" "," "," "," ","B"," "," "," "],
             [" "," "," "," "," "," "," "," "],
-            ["P","P","P","P","P","P","P","P"],
-            ["R","N","B","Q","K","B","N","R"]
+            [" "," "," "," "," "," "," "," "],
+            [" "," "," "," "," "," "," "," "],
+            [" "," "," "," "," "," "," "," "],
+            [" "," "," "," "," "," "," "," "],
+            [" "," "," "," "," "," "," "," "],
+            ["R"," "," "," ","K"," "," ","R"]
         ]
         
-        arrayToBitboards(chessBoard: chessBoard, WP: &WP, WN: &WN, WB: &WB, WR: &WR, WQ: &WQ, WK: &WK, BP: &BP, BN: &BN, BB: &BB, BR: &BR, BQ: &BQ, BK: &BK)
+        arrayToBitboards(chessBoard: chessBoard, WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK)
+        
     }
     
     func initiateChess960() {
-        var WP: UInt64 = 0
-        var WN: UInt64 = 0
-        var WB: UInt64 = 0
-        var WR: UInt64 = 0
-        var WQ: UInt64 = 0
-        var WK: UInt64 = 0
-        var BP: UInt64 = 0
-        var BN: UInt64 = 0
-        var BB: UInt64 = 0
-        var BR: UInt64 = 0
-        var BQ: UInt64 = 0
-        var BK: UInt64 = 0
+        let WP: UInt64 = 0
+        let WN: UInt64 = 0
+        let WB: UInt64 = 0
+        let WR: UInt64 = 0
+        let WQ: UInt64 = 0
+        let WK: UInt64 = 0
+        let BP: UInt64 = 0
+        let BN: UInt64 = 0
+        let BB: UInt64 = 0
+        let BR: UInt64 = 0
+        let BQ: UInt64 = 0
+        let BK: UInt64 = 0
         
         var chessBoard: [[String]] = [
             [" "," "," "," "," "," "," "," "],
@@ -131,10 +141,22 @@ class BoardGeneration {
         chessBoard[0][counter] = "r"
         chessBoard[7][counter] = "R"
         
-        arrayToBitboards(chessBoard: chessBoard, WP: &WP, WN: &WN, WB: &WB, WR: &WR, WQ: &WQ, WK: &WK, BP: &BP, BN: &BN, BB: &BB, BR: &BR, BQ: &BQ, BK: &BK)
+        arrayToBitboards(chessBoard: chessBoard, WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK)
     }
     
-    func arrayToBitboards(chessBoard: [[String]], WP: inout UInt64, WN: inout UInt64, WB: inout UInt64, WR: inout UInt64, WQ: inout UInt64, WK: inout UInt64, BP: inout UInt64, BN: inout UInt64, BB: inout UInt64, BR: inout UInt64, BQ: inout UInt64, BK: inout UInt64) {
+    func arrayToBitboards(chessBoard: [[String]], WP: UInt64, WN: UInt64, WB: UInt64, WR: UInt64, WQ: UInt64, WK: UInt64, BP: UInt64, BN: UInt64, BB: UInt64, BR: UInt64, BQ: UInt64, BK: UInt64) {
+        var WP = WP
+        var WN = WN
+        var WB = WB
+        var WR = WR
+        var WQ = WQ
+        var WK = WK
+        var BP = BP
+        var BN = BN
+        var BB = BB
+        var BR = BR
+        var BQ = BQ
+        var BK = BK
         var binary: String!
         
         for i in 0..<64 {
@@ -173,7 +195,7 @@ class BoardGeneration {
         
         drawArray(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK)
         
-        Moves().possibleMovesW(history: "1636", WP: WP, WN: WN, WB: &WB, WR: &WR, WQ: &WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK)
+        Moves().possibleMovesW(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK, EP: EP, CWK: CWK, CWQ: CWQ, CBK: CBK, CBQ: CBQ)
         
     }
     
@@ -222,3 +244,4 @@ class BoardGeneration {
         }
     }
 }
+
