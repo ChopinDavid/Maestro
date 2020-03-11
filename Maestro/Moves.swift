@@ -9,6 +9,8 @@
 import Foundation
 
 class Moves {
+    static var shared: Moves = Moves()
+    
     let fileA: UInt64 = 72340172838076673
     let fileH: UInt64 = 9259542123273814144
     let filesAB: UInt64 = 217020518514230019
@@ -180,6 +182,65 @@ class Moves {
         let possibleMoves = pseudoPossibleMoves&mask
         
         return possibleMoves
+    }
+    
+    func makeMove(board: UInt64, move: String, type: Character) -> UInt64 {
+        var board = board
+        if move.charAt(3).isNumber {//'regular' move
+            let start: UInt64 = UInt64((move.charAt(0).wholeNumberValue!*8)+(move.charAt(1).wholeNumberValue!))
+            let end: UInt64 = UInt64((move.charAt(2).wholeNumberValue!*8)+(move.charAt(3).wholeNumberValue!))
+            if ((board>>start)&1) == 1 {
+                board &= ~(1<<start)
+                board |= (1<<end)
+            } else {
+                board &= ~(1<<end)
+            }
+        } else if (move.charAt(3) == "P") {//pawn promotion
+            var start: UInt64!
+            var end: UInt64!
+            if move.charAt(2).isUppercase {
+                start = UInt64((fileMasks8[move.charAt(0).wholeNumberValue!] & rankMasks8[1]).trailingZeroBitCount)
+                end = UInt64((fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[0]).trailingZeroBitCount)
+            } else {
+                start = UInt64((fileMasks8[move.charAt(0).wholeNumberValue!] & rankMasks8[6]).trailingZeroBitCount)
+                end = UInt64((fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[7]).trailingZeroBitCount)
+            }
+            if type == move.charAt(2) {
+                board &= ~(1<<start)
+                board |= (1<<end)
+            } else {
+                board &= ~(1<<end)
+            }
+        } else if move.charAt(3)=="E" {//en passant
+            var start: UInt64!
+            var end: UInt64!
+            if move.charAt(2).isUppercase {
+                start = UInt64((fileMasks8[move.charAt(0).wholeNumberValue!] & rankMasks8[4]).trailingZeroBitCount)
+                end = UInt64((fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[5]).trailingZeroBitCount)
+                board &= ~(1<<(fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[4]))
+            } else {
+                start = UInt64((fileMasks8[move.charAt(0).wholeNumberValue!] & rankMasks8[3]).trailingZeroBitCount)
+                end = UInt64((fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[2]).trailingZeroBitCount)
+                board &= ~(1<<(fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[3]))
+            }
+            if ((board>>start)&1)==1 {
+                board &= ~(1<<start)
+                board |= (1<<end)
+            }
+        } else {
+            print("ERROR: Invalid move type")
+        }
+        return board
+    }
+    
+    func makeMoveEP(board: UInt64, move: String) -> UInt64 {
+        if move.charAt(3).isNumber {
+            let start: Int = (move.charAt(0).wholeNumberValue! * 8) + move.charAt(1).wholeNumberValue!
+            if (abs(move.charAt(0).wholeNumberValue! - move.charAt(2).wholeNumberValue!) == 2) && (((board>>start) & 1) == 1) {//pawn double push
+                return fileMasks8[move.charAt(1).wholeNumberValue!]
+            }
+        }
+        return 0
     }
     
     func possibleMovesW(WP: UInt64, WN: UInt64, WB: UInt64, WR: UInt64, WQ: UInt64, WK: UInt64, BP: UInt64, BN: UInt64, BB: UInt64, BR: UInt64, BQ: UInt64, BK: UInt64, EP: UInt64, CWK: Bool, CWQ: Bool, CBK: Bool, CBQ: Bool) -> String {

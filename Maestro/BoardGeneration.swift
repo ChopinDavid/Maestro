@@ -9,15 +9,7 @@
 import Foundation
 
 class BoardGeneration {
-    let EP: UInt64 = 1157442765409226768
-    var CWK: Bool = false
-    var CWQ: Bool = false
-    var CBK: Bool = false
-    var CBQ: Bool = false
-    var universalCastleWhiteK: Bool = false
-    var universalCastleWhiteQ: Bool = false
-    var universalCastleBlackK: Bool = false
-    var universalCastleBlackQ: Bool = false
+    var viewController: ViewController!
     func initiateStandardChess() {
         let WP: UInt64 = 0
         let WN: UInt64 = 0
@@ -33,14 +25,14 @@ class BoardGeneration {
         let BK: UInt64 = 0
         
         let chessBoard: [[String]] = [
+            ["r","n","b","q","k","b","n","r"],
+            ["p","p","p","p","p","p","p","p"],
             [" "," "," "," "," "," "," "," "],
             [" "," "," "," "," "," "," "," "],
             [" "," "," "," "," "," "," "," "],
             [" "," "," "," "," "," "," "," "],
-            [" "," "," "," "," "," "," "," "],
-            [" "," "," "," "," "," "," "," "],
-            [" "," "," "," "," "," "," "," "],
-            ["R"," "," "," ","K"," "," ","R"]
+            ["P","P","P","P","P","P","P","P"],
+            ["R","N","B","Q","K","B","N","R"]
         ]
         
         arrayToBitboards(chessBoard: chessBoard, WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK)
@@ -194,8 +186,18 @@ class BoardGeneration {
         }
         
         drawArray(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK)
-        
-        Moves().possibleMovesW(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK, EP: EP, CWK: CWK, CWQ: CWQ, CBK: CBK, CBQ: CBQ)
+        viewController.WP = WP
+        viewController.WN = WN
+        viewController.WB = WB
+        viewController.WR = WR
+        viewController.WQ = WQ
+        viewController.WK = WK
+        viewController.BP = BP
+        viewController.BN = BN
+        viewController.BB = BB
+        viewController.BR = BR
+        viewController.BQ = BQ
+        viewController.BK = BK
         
     }
     
