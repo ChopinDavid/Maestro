@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6C6C2484-2D69-442A-ABE1-E6A2E7B51D0C"
+            uuid = "C75D5AE4-15DE-4E9D-A179-4CBA94754460"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Maestro2/BoardGeneration.swift"
+            filePath = "Maestro/Moves.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
-            landmarkName = "arrayToBitboards(chessBoard:WP:WN:WB:WR:WQ:WK:BP:BN:BB:BR:BQ:BK:)"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "horizontalAndVerticalMoves(s:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

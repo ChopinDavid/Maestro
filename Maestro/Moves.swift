@@ -37,6 +37,12 @@ class Moves {
     let antiDiagonalMasks8: [UInt64] = [ 128, 32832, 8405024, 2151686160, 550831656968, 141012904183812, 36099303471055874, 9241421688590303745, 4620710844295151872, 2310355422147575808, 1155177711073755136, 577588855528488960, 288794425616760832, 144396663052566528, 72057594037927936 ]
     
     func horizontalAndVerticalMoves(s: Int) -> UInt64 {
+        let binaryS: UInt64 = 1<<s
+        let possibilitiesHorizontal: UInt64 = (occupied &- (2 &* binaryS)) ^ UInt64.reverse(UInt64.reverse(occupied) &- 2 &* UInt64.reverse(binaryS))
+        let possibilitiesVertical: UInt64 = ((occupied & fileMasks8[s % 8]) &- (2 &* binaryS)) ^ UInt64.reverse(UInt64.reverse(occupied & fileMasks8[s % 8]) &- (2 &* UInt64.reverse(binaryS)))
+        return (possibilitiesHorizontal & rankMasks8[s / 8]) | (possibilitiesVertical & fileMasks8[s % 8])
+        
+        /*
         let rankMask: UInt64 = rankMasks8[s/8]
         let fileMask: UInt64 = fileMasks8[s%8]
         let pseudoPossibleMoves: UInt64 = rankMask ^ fileMask
@@ -107,10 +113,16 @@ class Moves {
         let mask = unblockedRanks | unblockedFiles
         let possibleMoves = pseudoPossibleMoves&mask
         
-        return possibleMoves
+        return possibleMoves*/
     }
     
     func diagonalAndAntiDiagonalMoves(s: Int) -> UInt64 {
+        let binaryS: UInt64 = 1<<s
+        let possibilitiesDiagonal: UInt64 = ((occupied & diagonalMasks8[(s / 8) &+ (s % 8)]) &- (2 &* binaryS)) ^ UInt64.reverse(UInt64.reverse(occupied & diagonalMasks8[(s / 8) &+ (s % 8)]) &- (2 &* UInt64.reverse(binaryS)))
+        let possibilitiesAntiDiagonal: UInt64 = ((occupied & antiDiagonalMasks8[(s / 8) &+ 7 &- (s % 8)]) &- (2 &* binaryS)) ^ UInt64.reverse(UInt64.reverse(occupied & antiDiagonalMasks8[(s / 8) &+ 7 &- (s % 8)]) &- (2 &* UInt64.reverse(binaryS)))
+        return (possibilitiesDiagonal & diagonalMasks8[(s / 8) &+ (s % 8)]) | (possibilitiesAntiDiagonal & antiDiagonalMasks8[(s / 8) &+ 7 &- (s % 8)])
+        
+        /*
         let diagonalMask: UInt64! = diagonalMasks8[s%8 + s/8]
         let antiDiagonalMask: UInt64! = antiDiagonalMasks8[(7 - s%8) + s/8]
         let pseudoPossibleMoves: UInt64 = diagonalMask ^ antiDiagonalMask
@@ -181,7 +193,7 @@ class Moves {
         let mask = unblockedDiagonals | unblockedAntiDiagonals
         let possibleMoves = pseudoPossibleMoves&mask
         
-        return possibleMoves
+        return possibleMoves*/
     }
     
     func makeMove(board: UInt64, move: String, type: Character) -> UInt64 {

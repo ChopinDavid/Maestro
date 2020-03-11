@@ -41,6 +41,7 @@ class ViewController: UIViewController {
         
         
         boardGeneration.initiateStandardChess()
+        //print(Moves.shared.possibleMovesW(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK, EP: EP, CWK: CWK, CWQ: CWQ, CBK: CBK, CBQ: CBQ))
         
         Perft.shared.perft(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK, EP: EP, CWK: CWK, CWQ: CWQ, CBK: CBK, CBQ: CBQ, whiteToMove: whiteToMove, depth: 0)
         print(Perft.shared.perftMoveCounter)
