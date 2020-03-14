@@ -91,15 +91,17 @@ class ViewController: UIViewController {
     var BK: UInt64 = 0
     
     var EP: UInt64 = 0
-    var CWK: Bool = false
-    var CWQ: Bool = false
-    var CBK: Bool = false
-    var CBQ: Bool = false
+    var CWK: Bool = true
+    var CWQ: Bool = true
+    var CBK: Bool = true
+    var CBQ: Bool = true
     var universalCastleWhiteK: Bool = false
     var universalCastleWhiteQ: Bool = false
     var universalCastleBlackK: Bool = false
     var universalCastleBlackQ: Bool = false
     var whiteToMove: Bool = true
+    var whiteInCheck: Bool = false
+    var blackInCheck: Bool = false
     
     var playerSelectedSquare: Int?
     var potentialDestinationSquares: [Int]?
@@ -153,7 +155,7 @@ class ViewController: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CommandEntered"), object: nil)
     }
     
-    @IBAction func pieceSelected(sender: AnyObject) {
+    @IBAction func squareSelected(sender: AnyObject) {
         guard let button = sender as? UIButton else {
             return
         }
@@ -165,13 +167,21 @@ class ViewController: UIViewController {
         if playerSelectedSquare != button.tag {
             
             if playerSelectedSquare != nil && potentialDestinationSquares!.contains(button.tag) {
+                whiteInCheck = false
+                blackInCheck = false
                 Moves.shared.makeMoveUI(movingSquare: playerSelectedSquare!, destinationSquare: button.tag)
                 buttonsArray[playerSelectedSquare!].backgroundColor = nil
                 playerSelectedSquare = nil
                 draw()
+                if Moves.shared.unsafeForWhite(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK) & WK != 0 {
+                    whiteInCheck = true
+                }
+                if Moves.shared.unsafeForBlack(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK) & BK != 0 {
+                    blackInCheck = true
+                }
                 
                 if whiteToMove {
-                    if Moves.shared.unsafeForWhite(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK) & WK != 0 && Moves.shared.possibleK(occupied: WP|WN|WB|WR|WQ|WK|BP|BN|BB|BR|BQ|BK, K: WK) == "" {
+                    if whiteInCheck && Moves.shared.possibleK(occupied: WP|WN|WB|WR|WQ|WK|BP|BN|BB|BR|BQ|BK, K: WK) == "" {
                         //checkmate, black wins
                         let storyboard = UIStoryboard(name: "Main", bundle: .main)
                         let resultViewController = storyboard.instantiateViewController(identifier: "ResultViewController") as! ResultViewController
@@ -187,7 +197,7 @@ class ViewController: UIViewController {
                         present(resultViewController, animated: false, completion: nil)
                     }
                 } else {
-                    if Moves.shared.unsafeForBlack(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK) & BK != 0 && Moves.shared.possibleK(occupied: WP|WN|WB|WR|WQ|WK|BP|BN|BB|BR|BQ|BK, K: BK) == "" {
+                    if blackInCheck && Moves.shared.possibleK(occupied: WP|WN|WB|WR|WQ|WK|BP|BN|BB|BR|BQ|BK, K: BK) == "" {
                         //checkmate, white wins
                         let storyboard = UIStoryboard(name: "Main", bundle: .main)
                         let resultViewController = storyboard.instantiateViewController(identifier: "ResultViewController") as! ResultViewController

@@ -204,23 +204,23 @@ class Moves {
     func makeMove(board: UInt64, move: String, type: Character) -> UInt64 {
         var board = board
         if move.charAt(3).isNumber {//'regular' move
-            let start: Int = (move.charAt(0).wholeNumberValue!*8)+(move.charAt(1).wholeNumberValue!)
-            let end: Int = (move.charAt(2).wholeNumberValue!*8)+(move.charAt(3).wholeNumberValue!)
-            if ((board>>start)&1) == 1 {
+            let start: Int = move.charAt(0).wholeNumberValue!*8 + move.charAt(1).wholeNumberValue!
+            let end: Int = move.charAt(2).wholeNumberValue!*8 + move.charAt(3).wholeNumberValue!
+            if (board>>start)&1 == 1 {
                 board &= ~(1<<start)
                 board |= (1<<end)
             } else {
                 board &= ~(1<<end)
             }
-        } else if (move.charAt(3) == "P") {//pawn promotion
+        } else if move.charAt(3) == "P" {//pawn promotion
             var start: Int!
             var end: Int!
             if move.charAt(2).isUppercase {
-                start = (fileMasks8[move.charAt(0).wholeNumberValue!] & rankMasks8[6]).trailingZeroBitCount
-                end = (fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[7]).trailingZeroBitCount
+                start = (fileMasks8[move.charAt(0).wholeNumberValue!]&rankMasks8[6]).trailingZeroBitCount
+                end = (fileMasks8[move.charAt(1).wholeNumberValue!]&rankMasks8[7]).trailingZeroBitCount
             } else {
-                start = (fileMasks8[move.charAt(0).wholeNumberValue!] & rankMasks8[1]).trailingZeroBitCount
-                end = (fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[0]).trailingZeroBitCount
+                start = (fileMasks8[move.charAt(0).wholeNumberValue!]&rankMasks8[1]).trailingZeroBitCount
+                end = (fileMasks8[move.charAt(1).wholeNumberValue!]&rankMasks8[0]).trailingZeroBitCount
             }
             if type == move.charAt(2) {
                 board &= ~(1<<start)
@@ -228,24 +228,24 @@ class Moves {
             } else {
                 board &= ~(1<<end)
             }
-        } else if move.charAt(3)=="E" {//en passant
+        } else if move.charAt(3) == "E" {//en passant
             var start: Int!
             var end: Int!
-            if move.charAt(2).isUppercase {
-                start = (fileMasks8[move.charAt(0).wholeNumberValue!] & rankMasks8[4]).trailingZeroBitCount
-                end = (fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[5]).trailingZeroBitCount
-                board &= ~(1<<(fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[4]))
+            if move.charAt(2) == "W" {
+                start = (fileMasks8[move.charAt(0).wholeNumberValue!]&rankMasks8[3]).trailingZeroBitCount
+                end = (fileMasks8[move.charAt(1).wholeNumberValue!]&rankMasks8[2]).trailingZeroBitCount
+                board &= ~(fileMasks8[move.charAt(1).wholeNumberValue!]&rankMasks8[3])
             } else {
-                start = (fileMasks8[move.charAt(0).wholeNumberValue!] & rankMasks8[3]).trailingZeroBitCount
-                end = (fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[2]).trailingZeroBitCount
-                board &= ~(1<<(fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[3]))
+                start = (fileMasks8[move.charAt(0).wholeNumberValue!]&rankMasks8[4]).trailingZeroBitCount
+                end = (fileMasks8[move.charAt(1).wholeNumberValue!]&rankMasks8[5]).trailingZeroBitCount
+                board &= ~(fileMasks8[move.charAt(1).wholeNumberValue!]&rankMasks8[4])
             }
-            if ((board>>start)&1)==1 {
+            if ((board>>start)&1) == 1 {
                 board &= ~(1<<start)
                 board |= (1<<end)
             }
         } else {
-            print("ERROR: Invalid move type")
+            print("ERROR: Invalid move type");
         }
         return board
     }
@@ -266,7 +266,12 @@ class Moves {
         occupied = WP|WN|WB|WR|WQ|WK|BP|BN|BB|BR|BQ|BK
         empty = ~occupied
         
-        let list: String = "\(possibleWP(WP: WP, BP: BP, EP: EP))\(possibleN(occupied: occupied, N: WN))\(possibleB(occupied: occupied, B: WB))\(possibleR(occupied: occupied, R: WR))\(possibleQ(occupied: occupied, Q: WQ))\(possibleK(occupied: occupied, K: WK))\(possibleCW(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK, CWK: CWK, CWQ: CWQ))"
+        let list: String
+        if viewController.whiteInCheck {
+            list = possibleK(occupied: occupied, K: WK)
+        } else {
+            list = "\(possibleWP(WP: WP, BP: BP, EP: EP))\(possibleN(occupied: occupied, N: WN))\(possibleB(occupied: occupied, B: WB))\(possibleR(occupied: occupied, R: WR))\(possibleQ(occupied: occupied, Q: WQ))\(possibleK(occupied: occupied, K: WK))\(possibleCW(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK, CWK: CWK, CWQ: CWQ))"
+        }
         return list
     }
     
@@ -276,7 +281,12 @@ class Moves {
         occupied = WP|WN|WB|WR|WQ|WK|BP|BN|BB|BR|BQ|BK
         empty = ~occupied
         
-        let list: String = "\(possibleBP(BP: BP, WP: WP, EP: EP))\(possibleN(occupied: occupied, N: BN))\(possibleB(occupied: occupied, B: BB))\(possibleR(occupied: occupied, R: BR))\(possibleQ(occupied: occupied, Q: BQ))\(possibleK(occupied: occupied, K: BK))\(possibleCB(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK, CBK: CBK, CBQ: CBQ))"
+        let list: String
+        if viewController.blackInCheck {
+            list = possibleK(occupied: occupied, K: BK)
+        } else {
+            list = "\(possibleBP(BP: BP, WP: WP, EP: EP))\(possibleN(occupied: occupied, N: BN))\(possibleB(occupied: occupied, B: BB))\(possibleR(occupied: occupied, R: BR))\(possibleQ(occupied: occupied, Q: BQ))\(possibleK(occupied: occupied, K: BK))\(possibleCB(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK, CBK: CBK, CBQ: CBQ))"
+        }
         return list
     }
     
@@ -593,8 +603,11 @@ class Moves {
     func possibleCW(WP: UInt64, WN: UInt64, WB: UInt64, WR: UInt64, WQ: UInt64, WK: UInt64, BP: UInt64, BN: UInt64, BB: UInt64, BR: UInt64, BQ: UInt64, BK: UInt64, CWK: Bool, CWQ: Bool) -> String {
         var list: String = ""
         let unsafe: UInt64 = unsafeForWhite(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK)
+        
         if unsafe&WK == 0 {
+            
             if CWK && (((1<<castleRooks[0]) & WR) != 0) {
+                
                 let a: UInt64 = (occupied | unsafe)
                 let b: UInt64 = ((1<<61) | (1<<62))
                 if (a & b) == 0 {
@@ -886,6 +899,27 @@ class Moves {
         viewController.BQ = Moves.shared.makeMove(board: viewController.BQ, move: moveString, type: "q")
         viewController.BK = Moves.shared.makeMove(board: viewController.BK, move: moveString, type: "k")
         viewController.EP = Moves.shared.makeMoveEP(board: viewController.WP|viewController.BP,move: moveString)
+        //The following code should probably be implemented elsewhere
+        if movingSquare == 60 && destinationSquare == 62 && viewController.WK == 1<<62 {
+            viewController.WR -= 6917529027641081856
+            viewController.CWK = false
+            viewController.CWQ = false
+        }
+        if movingSquare == 60 && destinationSquare == 58 && viewController.WK == 1<<58 {
+            viewController.WR += 504403158265495552
+            viewController.CWK = false
+            viewController.CWQ = false
+        }
+        if movingSquare == 4 && destinationSquare == 6 && viewController.BK == 1<<6 {
+            viewController.BR -= 96
+            viewController.CBK = false
+            viewController.CBQ = false
+        }
+        if movingSquare == 4 && destinationSquare == 2 && viewController.BK == 1<<2 {
+            viewController.BR += 7
+            viewController.CBK = false
+            viewController.CBQ = false
+        }
         viewController.whiteToMove = !viewController.whiteToMove
     }
 }

@@ -51,7 +51,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="WN"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="spb-rz-LdP"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="spb-rz-LdP"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="63" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YqE-Ok-9vn">
@@ -63,7 +63,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="WR"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jzi-Zu-1MC"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jzi-Zu-1MC"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="59" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mAK-Zf-ApK">
@@ -75,7 +75,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="WQ"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Of-MP-7gd"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Of-MP-7gd"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="57" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4a1-JC-izp">
@@ -87,7 +87,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="WN"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aZp-tp-ozZ"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aZp-tp-ozZ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="60" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sUf-Ol-gOo">
@@ -99,7 +99,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="WK"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lb4-bJ-Y18"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lb4-bJ-Y18"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="61" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="48I-7S-knc">
@@ -111,7 +111,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="WB"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SWL-ck-heD"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SWL-ck-heD"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="58" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wP5-pU-7I5">
@@ -123,7 +123,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="WB"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MyH-gg-atC"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MyH-gg-atC"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="56" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TXl-Zz-KJ5">
@@ -135,7 +135,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="WR"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MZ5-sk-jz6"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MZ5-sk-jz6"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="54" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eVu-3d-GfQ">
@@ -147,7 +147,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="WP"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DNy-Y3-ShD"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DNy-Y3-ShD"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="55" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="12T-CG-9Xy">
@@ -159,7 +159,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="WP"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8M3-7O-h3D"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8M3-7O-h3D"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="51" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ueS-p7-Hxt">
@@ -171,7 +171,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="WP"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kBf-Qv-2nZ"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kBf-Qv-2nZ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="49" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4UF-mP-dpV">
@@ -183,7 +183,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="WP"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZKd-r2-VQ1"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZKd-r2-VQ1"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="52" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E7B-oP-sbu">
@@ -195,7 +195,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="WP"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ac6-y8-sa1"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ac6-y8-sa1"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="53" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PoD-98-h2c">
@@ -207,7 +207,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="WP"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H6D-KX-5Yj"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H6D-KX-5Yj"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="50" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zzr-OB-M4i">
@@ -219,7 +219,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="WP"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xOn-8u-45D"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xOn-8u-45D"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="48" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jDw-jQ-cEU">
@@ -231,7 +231,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="WP"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mEd-SQ-iKn"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mEd-SQ-iKn"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="46" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V5a-O4-5BK">
@@ -242,7 +242,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KPe-AH-FXK"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KPe-AH-FXK"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="47" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4nM-3i-bKH">
@@ -253,7 +253,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vll-x4-mei"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vll-x4-mei"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="43" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8HY-GX-EqC">
@@ -264,7 +264,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mal-W7-CbI"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mal-W7-CbI"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="41" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sds-3w-MM1">
@@ -275,7 +275,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RRA-Kd-EU7"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RRA-Kd-EU7"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="44" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uNt-Tu-BnU">
@@ -286,7 +286,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UCZ-rC-FYj"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UCZ-rC-FYj"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="45" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2I9-2p-SbY">
@@ -297,7 +297,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IwZ-Ur-lQR"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IwZ-Ur-lQR"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="42" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aqn-Dn-shB">
@@ -308,7 +308,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vIO-QM-NVr"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vIO-QM-NVr"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="40" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cX8-tT-C5a">
@@ -319,7 +319,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QL8-Wl-f9b"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QL8-Wl-f9b"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="38" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CuA-ed-8Vu">
@@ -330,7 +330,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yGa-ff-OpI"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yGa-ff-OpI"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="39" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tvJ-qs-bIa">
@@ -341,7 +341,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="t96-0D-jTS"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="t96-0D-jTS"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="35" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qaM-fH-hxZ">
@@ -352,7 +352,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9ti-Hb-tmh"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9ti-Hb-tmh"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="33" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ep2-uV-jKt">
@@ -363,7 +363,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SFU-Ou-A9K"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SFU-Ou-A9K"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="36" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SIg-OK-QkX">
@@ -374,7 +374,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XDe-yl-p5e"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XDe-yl-p5e"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="37" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DkR-SJ-ddO">
@@ -385,7 +385,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aZB-oV-yYg"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aZB-oV-yYg"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="34" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BWz-wa-onZ">
@@ -396,7 +396,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="axw-wL-HqG"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="axw-wL-HqG"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="32" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0oT-5v-gUd">
@@ -407,7 +407,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QJQ-cI-2Os"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QJQ-cI-2Os"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="30" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CbL-Zn-GhA">
@@ -418,7 +418,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0ov-qx-BcN"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0ov-qx-BcN"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="31" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Xi-Td-Wie">
@@ -429,7 +429,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qvV-ub-frT"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qvV-ub-frT"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="27" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kny-gN-zjZ">
@@ -440,7 +440,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ulb-3v-Owf"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ulb-3v-Owf"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="25" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3gs-Di-6Gg">
@@ -451,7 +451,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hZo-Kh-5wP"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hZo-Kh-5wP"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="28" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ikr-ux-4GO">
@@ -462,7 +462,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="61G-zD-gex"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="61G-zD-gex"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="29" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Jk-U5-DRz">
@@ -473,7 +473,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wQF-bW-sly"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wQF-bW-sly"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="26" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fE-5e-0Q5">
@@ -484,7 +484,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YL7-sP-gEq"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YL7-sP-gEq"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="24" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJY-8g-8ag">
@@ -495,7 +495,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Tq-4o-awY"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Tq-4o-awY"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9uR-Sj-P6e">
@@ -507,7 +507,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="BN"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0C2-Mv-83r"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0C2-Mv-83r"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xla-yv-CcN">
@@ -519,7 +519,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="BB"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iDh-LJ-J7F"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iDh-LJ-J7F"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K4U-K0-cnm">
@@ -531,7 +531,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="BQ"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xMF-xg-Sfa"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xMF-xg-Sfa"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVF-kZ-RL8">
@@ -543,7 +543,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="BK"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qLg-5U-FtH"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qLg-5U-FtH"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BY-mu-0PV">
@@ -555,7 +555,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="BB"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dez-jf-bKM"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dez-jf-bKM"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lhJ-u5-3lN">
@@ -567,7 +567,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="BN"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eue-f4-PLV"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eue-f4-PLV"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eHL-Wy-hQ5">
@@ -579,7 +579,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="BR"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xae-im-eEJ"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xae-im-eEJ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oGY-9E-rCr">
@@ -591,7 +591,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="BR"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="a8I-fE-oKu"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="a8I-fE-oKu"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="14" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jxx-5A-qAG">
@@ -603,7 +603,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="BP"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cy9-DH-a9u"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cy9-DH-a9u"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="15" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aU4-kj-6WT">
@@ -615,7 +615,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="BP"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ccm-Ac-eeN"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ccm-Ac-eeN"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="27R-jt-Frx">
@@ -627,7 +627,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="BP"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="U8d-tA-nE9"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="U8d-tA-nE9"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DOG-d2-oUH">
@@ -639,7 +639,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="BP"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xhf-pd-Hwa"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xhf-pd-Hwa"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7wb-Qe-TVr">
@@ -651,7 +651,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="BP"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dx8-YA-vOu"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dx8-YA-vOu"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ac2-UL-Nwb">
@@ -663,7 +663,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="BP"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gWk-kQ-f1O"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gWk-kQ-f1O"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X1U-KR-Aie">
@@ -675,7 +675,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="BP"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ITS-4U-ibo"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ITS-4U-ibo"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5rj-9J-Bjv">
@@ -687,7 +687,7 @@
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <state key="normal" image="BP"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yvG-AA-80u"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yvG-AA-80u"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="22" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JDm-jG-E77">
@@ -698,7 +698,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PZW-F5-Sea"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PZW-F5-Sea"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="23" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FcH-La-4AV">
@@ -709,7 +709,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="F8F-fz-NPz"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="F8F-fz-NPz"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="19" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MPH-Yl-EH0">
@@ -720,7 +720,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Y7e-ne-HBw"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Y7e-ne-HBw"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="17" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n1V-dU-NB9">
@@ -731,7 +731,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="j69-rz-CF9"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="j69-rz-CF9"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="20" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9uM-jQ-AQW">
@@ -742,7 +742,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3X4-sM-Db5"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3X4-sM-Db5"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="21" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cJT-Sb-ZXb">
@@ -753,7 +753,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5Ho-Qz-e70"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5Ho-Qz-e70"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="18" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9EQ-u8-6RM">
@@ -764,7 +764,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kWg-wr-Ji2"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kWg-wr-Ji2"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="16" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aik-Dv-KD2">
@@ -775,7 +775,7 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
                                 <connections>
-                                    <action selector="pieceSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZHI-V0-Bwk"/>
+                                    <action selector="squareSelectedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZHI-V0-Bwk"/>
                                 </connections>
                             </button>
                         </subviews>
