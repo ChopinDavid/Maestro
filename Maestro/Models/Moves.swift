@@ -10,6 +10,7 @@ import Foundation
 
 class Moves {
     static var shared: Moves = Moves()
+    var viewController: ViewController!
     
     let fileA: UInt64 = 72340172838076673
     let fileH: UInt64 = 9259542123273814144
@@ -37,12 +38,12 @@ class Moves {
     let antiDiagonalMasks8: [UInt64] = [ 128, 32832, 8405024, 2151686160, 550831656968, 141012904183812, 36099303471055874, 9241421688590303745, 4620710844295151872, 2310355422147575808, 1155177711073755136, 577588855528488960, 288794425616760832, 144396663052566528, 72057594037927936 ]
     
     func horizontalAndVerticalMoves(s: Int) -> UInt64 {
-        let binaryS: UInt64 = 1<<s
-        let possibilitiesHorizontal: UInt64 = (occupied &- (2 &* binaryS)) ^ UInt64.reverse(UInt64.reverse(occupied) &- 2 &* UInt64.reverse(binaryS))
-        let possibilitiesVertical: UInt64 = ((occupied & fileMasks8[s % 8]) &- (2 &* binaryS)) ^ UInt64.reverse(UInt64.reverse(occupied & fileMasks8[s % 8]) &- (2 &* UInt64.reverse(binaryS)))
-        return (possibilitiesHorizontal & rankMasks8[s / 8]) | (possibilitiesVertical & fileMasks8[s % 8])
+        /*let binaryS: UInt64 = 1<<s
+        let possibilitiesHorizontal: UInt64 = (occupied - 2 * binaryS) ^ (occupied.bitSwapped - 2 * binaryS.bitSwapped).bitSwapped
+        let possibilitiesVertical: UInt64 = ((occupied & fileMasks8[s % 8]) - (2 * binaryS)) ^ ((occupied & fileMasks8[s % 8]).bitSwapped - (2 * binaryS.bitSwapped)).bitSwapped
+        return (possibilitiesHorizontal & rankMasks8[s / 8]) | (possibilitiesVertical & fileMasks8[s % 8])*/
         
-        /*
+        
         let rankMask: UInt64 = rankMasks8[s/8]
         let fileMask: UInt64 = fileMasks8[s%8]
         let pseudoPossibleMoves: UInt64 = rankMask ^ fileMask
@@ -113,16 +114,20 @@ class Moves {
         let mask = unblockedRanks | unblockedFiles
         let possibleMoves = pseudoPossibleMoves&mask
         
-        return possibleMoves*/
+        return possibleMoves
     }
     
     func diagonalAndAntiDiagonalMoves(s: Int) -> UInt64 {
-        let binaryS: UInt64 = 1<<s
-        let possibilitiesDiagonal: UInt64 = ((occupied & diagonalMasks8[(s / 8) &+ (s % 8)]) &- (2 &* binaryS)) ^ UInt64.reverse(UInt64.reverse(occupied & diagonalMasks8[(s / 8) &+ (s % 8)]) &- (2 &* UInt64.reverse(binaryS)))
-        let possibilitiesAntiDiagonal: UInt64 = ((occupied & antiDiagonalMasks8[(s / 8) &+ 7 &- (s % 8)]) &- (2 &* binaryS)) ^ UInt64.reverse(UInt64.reverse(occupied & antiDiagonalMasks8[(s / 8) &+ 7 &- (s % 8)]) &- (2 &* UInt64.reverse(binaryS)))
-        return (possibilitiesDiagonal & diagonalMasks8[(s / 8) &+ (s % 8)]) | (possibilitiesAntiDiagonal & antiDiagonalMasks8[(s / 8) &+ 7 &- (s % 8)])
+        /*let binaryS: UInt64 = 1<<s
+        let a: UInt64 = ((occupied & diagonalMasks8[(s / 8) + (s % 8)]) - (2 * binaryS))
+        let b: UInt64 = ((occupied & diagonalMasks8[(s / 8) + (s % 8)]).bitSwapped - (2 * binaryS.bitSwapped)).bitSwapped
+        let c: UInt64 = ((occupied & antiDiagonalMasks8[(s / 8) + 7 - (s % 8)]) - (2 * binaryS))
+        let d: UInt64 = ((occupied & antiDiagonalMasks8[(s / 8) + 7 - (s % 8)]).bitSwapped - (2 * binaryS.bitSwapped)).bitSwapped
+        let possibilitiesDiagonal: UInt64 = a ^ b
+        let possibilitiesAntiDiagonal: UInt64 = c ^ d
+        return (possibilitiesDiagonal & diagonalMasks8[(s / 8) + (s % 8)]) | (possibilitiesAntiDiagonal & antiDiagonalMasks8[(s / 8) + 7 - (s % 8)])
+        */
         
-        /*
         let diagonalMask: UInt64! = diagonalMasks8[s%8 + s/8]
         let antiDiagonalMask: UInt64! = antiDiagonalMasks8[(7 - s%8) + s/8]
         let pseudoPossibleMoves: UInt64 = diagonalMask ^ antiDiagonalMask
@@ -193,14 +198,14 @@ class Moves {
         let mask = unblockedDiagonals | unblockedAntiDiagonals
         let possibleMoves = pseudoPossibleMoves&mask
         
-        return possibleMoves*/
+        return possibleMoves
     }
     
     func makeMove(board: UInt64, move: String, type: Character) -> UInt64 {
         var board = board
         if move.charAt(3).isNumber {//'regular' move
-            let start: UInt64 = UInt64((move.charAt(0).wholeNumberValue!*8)+(move.charAt(1).wholeNumberValue!))
-            let end: UInt64 = UInt64((move.charAt(2).wholeNumberValue!*8)+(move.charAt(3).wholeNumberValue!))
+            let start: Int = (move.charAt(0).wholeNumberValue!*8)+(move.charAt(1).wholeNumberValue!)
+            let end: Int = (move.charAt(2).wholeNumberValue!*8)+(move.charAt(3).wholeNumberValue!)
             if ((board>>start)&1) == 1 {
                 board &= ~(1<<start)
                 board |= (1<<end)
@@ -208,14 +213,14 @@ class Moves {
                 board &= ~(1<<end)
             }
         } else if (move.charAt(3) == "P") {//pawn promotion
-            var start: UInt64!
-            var end: UInt64!
+            var start: Int!
+            var end: Int!
             if move.charAt(2).isUppercase {
-                start = UInt64((fileMasks8[move.charAt(0).wholeNumberValue!] & rankMasks8[1]).trailingZeroBitCount)
-                end = UInt64((fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[0]).trailingZeroBitCount)
+                start = (fileMasks8[move.charAt(0).wholeNumberValue!] & rankMasks8[6]).trailingZeroBitCount
+                end = (fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[7]).trailingZeroBitCount
             } else {
-                start = UInt64((fileMasks8[move.charAt(0).wholeNumberValue!] & rankMasks8[6]).trailingZeroBitCount)
-                end = UInt64((fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[7]).trailingZeroBitCount)
+                start = (fileMasks8[move.charAt(0).wholeNumberValue!] & rankMasks8[1]).trailingZeroBitCount
+                end = (fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[0]).trailingZeroBitCount
             }
             if type == move.charAt(2) {
                 board &= ~(1<<start)
@@ -224,15 +229,15 @@ class Moves {
                 board &= ~(1<<end)
             }
         } else if move.charAt(3)=="E" {//en passant
-            var start: UInt64!
-            var end: UInt64!
+            var start: Int!
+            var end: Int!
             if move.charAt(2).isUppercase {
-                start = UInt64((fileMasks8[move.charAt(0).wholeNumberValue!] & rankMasks8[4]).trailingZeroBitCount)
-                end = UInt64((fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[5]).trailingZeroBitCount)
+                start = (fileMasks8[move.charAt(0).wholeNumberValue!] & rankMasks8[4]).trailingZeroBitCount
+                end = (fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[5]).trailingZeroBitCount
                 board &= ~(1<<(fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[4]))
             } else {
-                start = UInt64((fileMasks8[move.charAt(0).wholeNumberValue!] & rankMasks8[3]).trailingZeroBitCount)
-                end = UInt64((fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[2]).trailingZeroBitCount)
+                start = (fileMasks8[move.charAt(0).wholeNumberValue!] & rankMasks8[3]).trailingZeroBitCount
+                end = (fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[2]).trailingZeroBitCount
                 board &= ~(1<<(fileMasks8[move.charAt(1).wholeNumberValue!] & rankMasks8[3]))
             }
             if ((board>>start)&1)==1 {
@@ -261,7 +266,7 @@ class Moves {
         occupied = WP|WN|WB|WR|WQ|WK|BP|BN|BB|BR|BQ|BK
         empty = ~occupied
         
-        let list: String = "\(possibleWP(WP: WP, BP: BP, EP: EP))\(possibleN(occupied: occupied, N: WN))\(possibleB(occupied: occupied, B: WB))\(possibleR(occupied: occupied, R: WR))\(possibleQ(occupied: occupied, Q: WQ))\(possibleK(occupied: occupied, K: WK))\(possibleCW(WR: WR, CWK: CWK, CWQ: CWQ))"
+        let list: String = "\(possibleWP(WP: WP, BP: BP, EP: EP))\(possibleN(occupied: occupied, N: WN))\(possibleB(occupied: occupied, B: WB))\(possibleR(occupied: occupied, R: WR))\(possibleQ(occupied: occupied, Q: WQ))\(possibleK(occupied: occupied, K: WK))\(possibleCW(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK, CWK: CWK, CWQ: CWQ))"
         return list
     }
     
@@ -271,7 +276,7 @@ class Moves {
         occupied = WP|WN|WB|WR|WQ|WK|BP|BN|BB|BR|BQ|BK
         empty = ~occupied
         
-        let list: String = "\(possibleBP(BP: BP, WP: WP, EP: EP))\(possibleN(occupied: occupied, N: BN))\(possibleB(occupied: occupied, B: BB))\(possibleR(occupied: occupied, R: BR))\(possibleQ(occupied: occupied, Q: BQ))\(possibleK(occupied: occupied, K: BK))\(possibleCB(BR: BR, CBK: CBK, CBQ: CBQ))"
+        let list: String = "\(possibleBP(BP: BP, WP: WP, EP: EP))\(possibleN(occupied: occupied, N: BN))\(possibleB(occupied: occupied, B: BB))\(possibleR(occupied: occupied, R: BR))\(possibleQ(occupied: occupied, Q: BQ))\(possibleK(occupied: occupied, K: BK))\(possibleCB(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK, CBK: CBK, CBQ: CBQ))"
         return list
     }
     
@@ -353,13 +358,13 @@ class Moves {
         possibility = (WP << 1) & BP & rank5 & ~fileA & EP
         if possibility != 0 {
             let index: Int = possibility.trailingZeroBitCount
-            list += "\(index%8-1)\(index%8) E"
+            list += "\(index%8-1)\(index%8)WE"
         }
         
         possibility = (WP >> 1) & BP & rank5 & ~fileH & EP
         if possibility != 0 {
             let index: Int = possibility.trailingZeroBitCount
-            list += "\(index%8+1)\(index%8) E"
+            list += "\(index%8+1)\(index%8)WE"
         }
         
         return list
@@ -444,13 +449,13 @@ class Moves {
         possibility = (BP >> 1) & WP & rank4 & ~fileH & EP
         if possibility != 0 {
             let index: Int = possibility.trailingZeroBitCount
-            list += "\(index%8+1)\(index%8) E"
+            list += "\(index%8+1)\(index%8)BE"
         }
         
         possibility = (BP << 1) & WP & rank4 & ~fileA & EP
         if possibility != 0 {
             let index: Int = possibility.trailingZeroBitCount
-            list += "\(index%8-1)\(index%8) E"
+            list += "\(index%8-1)\(index%8)BE"
         }
         return list
     }
@@ -458,45 +463,29 @@ class Moves {
     func possibleN(occupied: UInt64, N: UInt64) -> String {
         var N = N
         var list: String = ""
-        if N != 0 {
-            var i: UInt64 = N & ~(N-1)
-            var possibility: UInt64!
-            while i != 0 {
-                let iLocation: Int = i.trailingZeroBitCount
-                if iLocation > 18 {
-                    possibility = knightSpan<<(iLocation-18)
-                } else {
-                    possibility = knightSpan>>(18-iLocation)
-                }
-                
-                if iLocation%8 < 4 {
-                    possibility &= ~filesGH&notMyPieces
-                } else {
-                    possibility &= ~filesAB&notMyPieces
-                }
-                if possibility != 0 {
-                    var j: UInt64 = possibility & ~(possibility - 1)
-                    while j != 0 {
-                        let index: Int = j.trailingZeroBitCount
-                        list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
-                        possibility &= ~j
-                        
-                        if possibility != 0 {
-                            j = possibility & ~(possibility-1)
-                        } else {
-                            j = 0
-                        }
-                    }
-                    N &= ~i
-                    if N != 0 {
-                        i = N & ~(N - 1)
-                    } else {
-                        i = 0
-                    }
-                } else {
-                    i = 0
-                }
+        var i = N & ~(N-1)
+        var possibility: UInt64!
+        while i != 0 {
+            let iLocation: Int = i.trailingZeroBitCount
+            if iLocation > 18 {
+                possibility = knightSpan<<(iLocation-18)
+            } else {
+                possibility = knightSpan>>(18-iLocation)
             }
+            if iLocation%8 < 4 {
+                possibility &= ~filesGH&notMyPieces
+            } else {
+                possibility &= ~filesAB&notMyPieces
+            }
+            var j: UInt64 = possibility & ~(possibility&-1)
+            while (j != 0) {
+                let index: Int = j.trailingZeroBitCount
+                list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
+                possibility &= ~j
+                j = possibility & ~(possibility&-1)
+            }
+            N &= ~i
+            i = N & ~(N&-1)
         }
         return list
     }
@@ -504,34 +493,20 @@ class Moves {
     func possibleB(occupied: UInt64, B: UInt64) -> String {
         var B = B
         var list: String = ""
-        if B != 0 {
-            var i: UInt64 = B & ~(B - 1)
-            var possibility: UInt64!
-            while i != 0 {
-                let iLocation: Int = i.trailingZeroBitCount
-                possibility = diagonalAndAntiDiagonalMoves(s: iLocation)&notMyPieces
-                if possibility != 0 {
-                    var j: UInt64 = possibility & ~(possibility - 1)
-                    while j != 0 {
-                        let index: Int = j.trailingZeroBitCount
-                        list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
-                        possibility &= ~j
-                        if possibility != 0 {
-                            j = possibility & ~(possibility - 1)
-                        } else {
-                            j = 0
-                        }
-                    }
-                    B &= ~i
-                    if B != 0 {
-                        i = B & ~(B - 1)
-                    } else {
-                        i = 0
-                    }
-                } else {
-                    i = 0
-                }
+        var i: UInt64 = B & ~(B-1)
+        var possibility: UInt64!
+        while i != 0 {
+            let iLocation: Int = i.trailingZeroBitCount
+            possibility = diagonalAndAntiDiagonalMoves(s: iLocation)&notMyPieces
+            var j: UInt64 = possibility & ~(possibility&-1)
+            while (j != 0) {
+                let index: Int = j.trailingZeroBitCount
+                list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
+                possibility &= ~j
+                j = possibility & ~(possibility&-1)
             }
+            B &= ~i
+            i = B & ~(B&-1)
         }
         return list
     }
@@ -539,34 +514,20 @@ class Moves {
     func possibleR(occupied: UInt64, R: UInt64) -> String {
         var R = R
         var list: String = ""
-        if R != 0 {
-            var i: UInt64 = R & ~(R - 1)
-            var possibility: UInt64!
-            while i != 0 {
-                let iLocation: Int = i.trailingZeroBitCount
-                possibility = horizontalAndVerticalMoves(s: iLocation)&notMyPieces
-                if possibility != 0 {
-                    var j: UInt64 = possibility & ~(possibility - 1)
-                    while j != 0 {
-                        let index: Int = j.trailingZeroBitCount
-                        list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
-                        possibility &= ~j
-                        if possibility != 0 {
-                            j = possibility & ~(possibility - 1)
-                        } else {
-                            j = 0
-                        }
-                    }
-                    R &= ~i
-                    if R != 0 {
-                        i = R & ~(R - 1)
-                    } else {
-                        i = 0
-                    }
-                } else {
-                    i = 0
-                }
+        var i: UInt64 = R & ~(R-1)
+        var possibility: UInt64!
+        while(i != 0) {
+            let iLocation: Int = i.trailingZeroBitCount
+            possibility = horizontalAndVerticalMoves(s: iLocation)&notMyPieces
+            var j: UInt64 = possibility & ~(possibility&-1)
+            while (j != 0) {
+                let index: Int = j.trailingZeroBitCount
+                list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
+                possibility &= ~j
+                j = possibility & ~(possibility&-1)
             }
+            R &= ~i
+            i = R & ~(R&-1)
         }
         return list
     }
@@ -574,34 +535,20 @@ class Moves {
     func possibleQ(occupied: UInt64, Q: UInt64) -> String {
         var Q = Q
         var list: String = ""
-        if Q != 0 {
-            var i: UInt64 = Q & ~(Q - 1)
-            var possibility: UInt64!
-            while i != 0 {
-                let iLocation: Int = i.trailingZeroBitCount
-                possibility = (horizontalAndVerticalMoves(s: iLocation)|diagonalAndAntiDiagonalMoves(s: iLocation))&notMyPieces
-                if possibility != 0 {
-                    var j: UInt64 = possibility & ~(possibility - 1)
-                    while j != 0 {
-                        let index: Int = j.trailingZeroBitCount
-                        list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
-                        possibility &= ~j
-                        if possibility != 0 {
-                            j = possibility & ~(possibility - 1)
-                        } else {
-                            j = 0
-                        }
-                    }
-                    Q &= ~i
-                    if Q != 0 {
-                        i = Q & ~(Q - 1)
-                    } else {
-                        i = 0
-                    }
-                } else {
-                    i = 0
-                }
+        var i: UInt64 = Q & ~(Q&-1)
+        var possibility: UInt64!
+        while(i != 0) {
+            let iLocation: Int = i.trailingZeroBitCount
+            possibility = (horizontalAndVerticalMoves(s: iLocation) | diagonalAndAntiDiagonalMoves(s: iLocation)) & notMyPieces
+            var j: UInt64 = possibility & ~(possibility&-1)
+            while (j != 0) {
+                let index: Int = j.trailingZeroBitCount
+                list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
+                possibility &= ~j
+                j = possibility & ~(possibility&-1)
             }
+            Q &= ~i
+            i = Q & ~(Q&-1)
         }
         return list
     }
@@ -611,53 +558,82 @@ class Moves {
         var possibility: UInt64!
         let iLocation: Int = K.trailingZeroBitCount
         if iLocation > 9 {
-            possibility = kingSpan<<(iLocation - 9)
+            possibility = kingSpan<<(iLocation-9)
         } else {
-            possibility = kingSpan>>(9 - iLocation)
+            possibility = kingSpan>>(9-iLocation)
         }
-        
-        if iLocation%8 < 4 {
+        if (iLocation%8<4) {
             possibility &= ~filesGH&notMyPieces
         } else {
             possibility &= ~filesAB&notMyPieces
         }
         
-        if possibility != 0 {
-            var j: UInt64 = possibility & ~(possibility - 1)
+        if viewController.whiteToMove {
+            let safeSquares: UInt64 = ~unsafeForWhite(WP: viewController.WP, WN: viewController.WN, WB: viewController.WB, WR: viewController.WR, WQ: viewController.WQ, WK: viewController.WK, BP: viewController.BP, BN: viewController.BN, BB: viewController.BB, BR: viewController.BR, BQ: viewController.BQ, BK: viewController.BK)
+            let nonWhiteOccupiedSquares: UInt64 = ~(viewController.WP|viewController.WN|viewController.WB|viewController.WR|viewController.WQ)
+            possibility = possibility & safeSquares & nonWhiteOccupiedSquares
+        } else {
+            let safeSquares: UInt64 = ~unsafeForBlack(WP: viewController.WP, WN: viewController.WN, WB: viewController.WB, WR: viewController.WR, WQ: viewController.WQ, WK: viewController.WK, BP: viewController.BP, BN: viewController.BN, BB: viewController.BB, BR: viewController.BR, BQ: viewController.BQ, BK: viewController.BK)
+            let nonBlackOccupiedSquares: UInt64 = ~(viewController.BP|viewController.BN|viewController.BB|viewController.BR|viewController.BQ)
+            possibility = possibility & safeSquares & nonBlackOccupiedSquares
+        }
+        
+        var j: UInt64 = possibility & ~(possibility&-1)
+        
+        while (j != 0) {
+            let index: Int = j.trailingZeroBitCount
+            list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
+            possibility &= ~j
+            j = possibility & ~(possibility&-1)
+        }
+        
+        return list
+    }
+    
+    func possibleCW(WP: UInt64, WN: UInt64, WB: UInt64, WR: UInt64, WQ: UInt64, WK: UInt64, BP: UInt64, BN: UInt64, BB: UInt64, BR: UInt64, BQ: UInt64, BK: UInt64, CWK: Bool, CWQ: Bool) -> String {
+        var list: String = ""
+        let unsafe: UInt64 = unsafeForWhite(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK)
+        if unsafe&WK == 0 {
+            if CWK && (((1<<castleRooks[0]) & WR) != 0) {
+                let a: UInt64 = (occupied | unsafe)
+                let b: UInt64 = ((1<<61) | (1<<62))
+                if (a & b) == 0 {
+                    list += "7476"
+                }
+            }
             
-            while (j != 0) {
-                let index: Int = j.trailingZeroBitCount
-                list += "\(iLocation/8)\(iLocation%8)\(index/8)\(index%8)"
-                possibility &= ~j
-                if possibility != 0 {
-                    j = possibility & ~(possibility - 1)
-                } else {
-                    j = 0
+            if CWQ && (((1<<castleRooks[1]) & WR) != 0) {
+                let knight: UInt64 = (1<<57)
+                let bishop: UInt64 = (1<<58)
+                let queen: UInt64 = (1<<59)
+                if ((occupied | (unsafe & ~knight)) & (knight | bishop | queen)) == 0 {
+                    list += "7472"
                 }
             }
         }
         return list
     }
     
-    func possibleCW(WR: UInt64, CWK: Bool, CWQ: Bool) -> String {
+    func possibleCB(WP: UInt64, WN: UInt64, WB: UInt64, WR: UInt64, WQ: UInt64, WK: UInt64, BP: UInt64, BN: UInt64, BB: UInt64, BR: UInt64, BQ: UInt64, BK: UInt64, CBK: Bool, CBQ: Bool) -> String {
         var list: String = ""
-        if CWK && (((1<<castleRooks[0]) & WR) != 0) {
-            list += "7476"
-        }
+        let unsafe: UInt64 = unsafeForBlack(WP: WP, WN: WN, WB: WB, WR: WR, WQ: WQ, WK: WK, BP: BP, BN: BN, BB: BB, BR: BR, BQ: BQ, BK: BK)
         
-        if CWQ && (((1<<castleRooks[1]) & WR) != 0) {
-            list += "7472";
-        }
-        return list
-    }
-    
-    func possibleCB(BR: UInt64, CBK: Bool, CBQ: Bool) -> String {
-        var list: String = ""
-        if CBK && (((1<<castleRooks[2]) & BR) != 0) {
-            list += "0406";
-        }
-        if CBQ && (((1<<castleRooks[3])&BR) != 0) {
-            list += "0402";
+        if unsafe&BK == 0 {
+            if CBK && (((1<<castleRooks[2]) & BR) != 0) {
+                let a: UInt64 = (occupied | unsafe)
+                let b: UInt64 = ((1<<5) | (1<<6))
+                if (a & b) == 0 {
+                    list += "0406"
+                }
+            }
+            if CBQ && (((1<<castleRooks[3])&BR) != 0) {
+                let knight: UInt64 = (1<<1)
+                let bishop: UInt64 = (1<<2)
+                let queen: UInt64 = (1<<3)
+                if ((occupied | (unsafe & ~knight)) & (knight | bishop | queen)) == 0 {
+                    list += "0402"
+                }
+            }
         }
         return list
     }
@@ -862,6 +838,55 @@ class Moves {
         for i in 0..<64 {
             print(chessBoard[i].description)
         }
+    }
+    
+    func getPossibleDestinationSquares(for square: Int) -> [Int]? {
+        var destinationSquares: [Int]?
+        let binarySquare: UInt64 = 1<<square
+        var notMyPieces: UInt64
+        if viewController.whiteToMove {
+            notMyPieces = ~(viewController.WP|viewController.WN|viewController.WB|viewController.WR|viewController.WQ|viewController.WK|viewController.BK)
+        } else {
+            notMyPieces = ~(viewController.BP|viewController.BN|viewController.BB|viewController.BR|viewController.BQ|viewController.BK|viewController.WK)
+        }
+        
+        if notMyPieces&binarySquare != 0 {
+            return []
+        } else {
+            let possibleMoves: [String]!
+            if viewController.whiteToMove {
+                possibleMoves = possibleMovesW(WP: viewController.WP, WN: viewController.WN, WB: viewController.WB, WR: viewController.WR, WQ: viewController.WQ, WK: viewController.WK, BP: viewController.BP, BN: viewController.BN, BB: viewController.BB, BR: viewController.BR, BQ: viewController.BQ, BK: viewController.BK, EP: viewController.EP, CWK: viewController.CWK, CWQ: viewController.CWQ, CBK: viewController.CBK, CBQ: viewController.CBQ).splitEveryNCharacters(n: 4)
+            } else {
+                possibleMoves = possibleMovesB(WP: viewController.WP, WN: viewController.WN, WB: viewController.WB, WR: viewController.WR, WQ: viewController.WQ, WK: viewController.WK, BP: viewController.BP, BN: viewController.BN, BB: viewController.BB, BR: viewController.BR, BQ: viewController.BQ, BK: viewController.BK, EP: viewController.EP, CWK: viewController.CWK, CWQ: viewController.CWQ, CBK: viewController.CBK, CBQ: viewController.CBQ).splitEveryNCharacters(n: 4)
+            }
+            for possibleMove in possibleMoves {
+                if destinationSquares == nil {
+                    destinationSquares = []
+                }
+                if possibleMove[0..<2].squareNumber! == square {
+                    destinationSquares!.append(possibleMove[2..<4].squareNumber!)
+                }
+            }
+        }
+        return destinationSquares
+    }
+    
+    func makeMoveUI(movingSquare: Int, destinationSquare: Int) {
+        let moveString: String = "\(movingSquare.squareId)\(destinationSquare.squareId)"
+        viewController.WP = Moves.shared.makeMove(board: viewController.WP, move: moveString, type: "P")
+        viewController.WN = Moves.shared.makeMove(board: viewController.WN, move: moveString, type: "N")
+        viewController.WB = Moves.shared.makeMove(board: viewController.WB, move: moveString, type: "B")
+        viewController.WR = Moves.shared.makeMove(board: viewController.WR, move: moveString, type: "R")
+        viewController.WQ = Moves.shared.makeMove(board: viewController.WQ, move: moveString, type: "Q")
+        viewController.WK = Moves.shared.makeMove(board: viewController.WK, move: moveString, type: "K")
+        viewController.BP = Moves.shared.makeMove(board: viewController.BP, move: moveString, type: "p")
+        viewController.BN = Moves.shared.makeMove(board: viewController.BN, move: moveString, type: "n")
+        viewController.BB = Moves.shared.makeMove(board: viewController.BB, move: moveString, type: "b")
+        viewController.BR = Moves.shared.makeMove(board: viewController.BR, move: moveString, type: "r")
+        viewController.BQ = Moves.shared.makeMove(board: viewController.BQ, move: moveString, type: "q")
+        viewController.BK = Moves.shared.makeMove(board: viewController.BK, move: moveString, type: "k")
+        viewController.EP = Moves.shared.makeMoveEP(board: viewController.WP|viewController.BP,move: moveString)
+        viewController.whiteToMove = !viewController.whiteToMove
     }
 }
 
